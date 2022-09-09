@@ -1,0 +1,49 @@
+{
+	"type": "module",
+	"name": "painperdu",
+	"version": "1.0.0",
+	"description": "Shortcut for routes",
+	"exports": "lib/index.js",
+	"author": "luctst",
+	"license": "MIT",
+	"files": [
+		"lib/**/*"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://www.github.com/luctst/painperdu"
+	},
+	"bugs": {
+		"url": "https://www.github.com/luctst/painperdu/issues"
+	},
+	"homepage": "https://www.github.com/luctst/painperdu",
+	"engines": {
+		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+	},
+	"eslintIgnore": [
+		"lib/build/"
+	],
+	"ava": {
+		"cache": true
+	},
+	"keywords": [],
+	"scripts": {
+		"test": "ava --verbose ./test/*.js",
+		"test:watch": "ava --watch --verbose --fail-fast ./test/*.js",
+		"lint": "npx eslint --cache './lib/**/*.js'",
+		"lint:watch": "esw -w --clear --color --cache './lib/**/*.js'",
+		"lint:fix": "npx eslint --fix './lib/**/*.js'",
+		"style": "prettier -c './lib/**/*.js'",
+		"style:fix": "prettier --c --write './lib/**/*.js'"
+	},
+	"devDependencies": {
+		"ava": "^4.3.3",
+		"eslint": "^8.23.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-watch": "^8.0.0",
+		"prettier": "^2.7.1"
+	}
+}
