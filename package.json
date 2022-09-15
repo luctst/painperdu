@@ -3,13 +3,15 @@
 	"name": "painperdu",
 	"version": "1.1.0",
 	"description": "Shortcut for routes",
-	"files": ["./dist/**/*"],
+	"files": [
+		"./dist/**/*"
+	],
 	"main": "./dist/painperdu.umd.cjs",
 	"module": "./dist/painperdu.js",
 	"exports": {
 		".": {
-		"import": "./dist/painperdu.js",
-		"require": "./dist/painperdu.umd.cjs"
+			"import": "./dist/painperdu.js",
+			"require": "./dist/painperdu.umd.cjs"
 		}
 	},
 	"author": "luctst",
@@ -33,7 +35,7 @@
 	},
 	"keywords": [],
 	"scripts": {
-		"dev": "vite --host",
+		"dev": "vite --host --debug --mode development",
 		"build": "vite build --mode production",
 		"test": "ava --verbose ./test/*.js",
 		"test:watch": "ava --watch --verbose --fail-fast ./test/*.js",
@@ -52,6 +54,7 @@
 		"eslint-plugin-prettier": "^4.2.1",
 		"eslint-watch": "^8.0.0",
 		"prettier": "^2.7.1",
+		"sass": "^1.54.9",
 		"vite": "^3.1.0"
 	}
 }
