@@ -1,6 +1,7 @@
 /* eslint-env browser */
+import debounce from 'lodash.debounce';
 import '@/scss/main.scss';
-import { Route, FinalConfig, Config, Nullable } from '@/types/index';
+import { Route, FinalConfig, Config, HtmlElementAttribues } from '@/types/index';
 
 const isObject = (obj: object): boolean => obj === Object(obj);
 const objectHasProperty = (obj: object, key: string): boolean | never => {
@@ -10,7 +11,6 @@ const objectHasProperty = (obj: object, key: string): boolean | never => {
 
   return Object.prototype.hasOwnProperty.call(obj, key);
 };
-const isInstanceHtmlElement = (object: any): object is HTMLElement => object;
 
 function checkRoutes(routes: Array<Route>): Array<Route> | never {
   if (!window) throw new Error('Should be use in an web page');
@@ -32,26 +32,11 @@ function checkRoutes(routes: Array<Route>): Array<Route> | never {
   return [...routes];
 }
 
-function debounce(fn: (event: string) => boolean, delay: number): () => void {
-  let timeoutID: number | Nullable<null> = null;
-  return function dbInner() {
-    clearTimeout(timeoutID);
-    const that = this;
-    const args = arguments;
-    timeoutID = setTimeout(function () {
-      fn.apply(that, args);
-    }, delay);
-  };
-}
-
-function createConfig(mainContainer, ops: FinalConfig): FinalConfig {
-  if (!isInstanceHtmlElement(mainContainer))
-    throw new Error('mainContainer should be an HTML Element');
-
+function createConfig(ops: FinalConfig): FinalConfig {
   const defaultConfig: FinalConfig = {
     shortCutLaunchName: 'KeyK',
     mainContainerId: 'painperdu',
-    mainContainer,
+    mainContainer: document.body,
     originURL: window.location.origin,
   };
 
@@ -68,10 +53,10 @@ function createConfig(mainContainer, ops: FinalConfig): FinalConfig {
   };
 }
 
-function createPainPerduContainer(container: HTMLElement, conf: FinalConfig): void {
+function createPainPerduContainer(container: HTMLElement, conf: FinalConfig,): void {
   container.classList.add('painperdu--active');
   const section = document.createElement('section');
-  const sectionAttributes = [
+  const sectionAttributes: Array<HtmlElementAttribues> = [
     {
       name: 'id',
       value: conf.mainContainerId,
@@ -112,23 +97,7 @@ function createPainPerduContainer(container: HTMLElement, conf: FinalConfig): vo
           <p>Start writing to search routes</p>
         </div>
         <div class="painperdu--modal--body--container is--none">
-          <ul class="painperdu--modal--body--container--list">
-            <li class="painperdu--modal--body--container--list--item" role="option">
-              <a href="/" class="painperdu--modal--body--container--list--item--link">
-                <div class="painperdu--modal--body--container--list--item--link--container">
-                  <div class="painperdu--modal--body--container--list--item--link--container--iconleft">
-                    <svg width="20" height="20" viewBox="0 0 20 20"><path d="M17 6v12c0 .52-.2 1-1 1H4c-.7 0-1-.33-1-1V2c0-.55.42-1 1-1h8l5 5zM14 8h-3.13c-.51 0-.87-.34-.87-.87V4" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linejoin="round"></path></svg>
-                  </div>
-                  <div class="painperdu--modal--body--container--list--item--link--container--content">
-                    <span>dfkgjdlfkgjdf</span>
-                  </div>
-                  <div class="painperdu--modal--body--container--list--item--link--container--iconright">
-                    <svg class="DocSearch-Hit-Select-Icon" width="20" height="20" viewBox="0 0 20 20"><g stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3v4c0 2-2 4-4 4H2"></path><path d="M8 17l-6-6 6-6"></path></g></svg>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
+          <ul class="painperdu--modal--body--container--list"></ul>
         </div>
       </main>
       <footer class="painperdu--modal--footer">
@@ -163,56 +132,164 @@ function createPainPerduContainer(container: HTMLElement, conf: FinalConfig): vo
   `;
 
   container.appendChild(section);
+  document.getElementById('painperdu-input').focus();
 }
 
-function onInputChange(userInput: string, routes: Array<Route>) {
-  function switchClass(shouldShowList: boolean): boolean {
-    const noItems = document.querySelector('.painperdu--modal--body--nosearch');
-    const itemsContainer = document.querySelector('.painperdu--modal--body--container');
+function switchClass(shouldShowList: boolean): boolean {
+  const noItems: HTMLElement = document.querySelector('.painperdu--modal--body--nosearch');
+  const itemsContainer: HTMLElement = document.querySelector('.painperdu--modal--body--container');
 
-    if (shouldShowList) {
-      itemsContainer.classList.remove('is--none');
-      itemsContainer.classList.add('is--block');
+  if (shouldShowList) {
+    itemsContainer.classList.remove('is--none');
+    itemsContainer.classList.add('is--block');
 
-      noItems.classList.remove('is--block');
-      noItems.classList.add('is--none');
-      return true;
-    }
-
-    itemsContainer.classList.remove('is--block');
-    itemsContainer.classList.add('is--none');
-    noItems.classList.remove('is--none');
-    noItems.classList.add('is--block');
+    noItems.classList.remove('is--block');
+    noItems.classList.add('is--none');
     return true;
   }
 
-  const handleDebounce: (inputValue: string) => void = debounce((inputValue) => {
-    const inputValueFormated = inputValue.toLowerCase().trim();
-    const arrayMatches = routes.filter((routeData) =>
-      routeData.label.toLowerCase().trim().includes(inputValueFormated)
-    );
-
-    if (!arrayMatches.length) return switchClass(false);
-    switchClass(true);
-
-    return true;
-  }, 200);
-  return handleDebounce(userInput);
+  itemsContainer.classList.remove('is--block');
+  itemsContainer.classList.add('is--none');
+  noItems.classList.remove('is--none');
+  noItems.classList.add('is--block');
+  return true;
 }
 
-function main(routes: Route[], container: HTMLElement, ops: FinalConfig): void {
+function createItems(routesMatched: Array<Route>, containerToCreateItems: Element, cf: FinalConfig): void {
+  return routesMatched.forEach((r, index) => {
+    const li: HTMLElement = document.createElement('li');
+    const liAttributes: Array<HtmlElementAttribues> = [
+      {
+        name: 'class',
+        value: 'painperdu--modal--body--container--list--item',
+      },
+      {
+        name: 'role',
+        value: 'option',
+      },
+      {
+        name: 'aria-selected',
+        value: index === 0 ? 'true' : 'false',
+      },
+    ];
+
+    liAttributes.forEach((attr) => li.setAttribute(attr.name, attr.value));
+    li.innerHTML = `
+    <a id="is--item--link--${index}" href="${cf.originURL + r.path}" class="painperdu--modal--body--container--list--item--link">
+      <div class="painperdu--modal--body--container--list--item--link--container">
+        <div class="painperdu--modal--body--container--list--item--link--container--iconleft">
+          <svg width="20" height="20" viewBox="0 0 20 20"><path d="M17 6v12c0 .52-.2 1-1 1H4c-.7 0-1-.33-1-1V2c0-.55.42-1 1-1h8l5 5zM14 8h-3.13c-.51 0-.87-.34-.87-.87V4" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linejoin="round"></path></svg>
+        </div>
+        <div class="painperdu--modal--body--container--list--item--link--container--content">
+          <span>${r.label}</span>
+        </div>
+        <div class="painperdu--modal--body--container--list--item--link--container--iconright">
+          <svg class="DocSearch-Hit-Select-Icon" width="20" height="20" viewBox="0 0 20 20"><g stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3v4c0 2-2 4-4 4H2"></path><path d="M8 17l-6-6 6-6"></path></g></svg>
+        </div>
+      </div>
+    </a>`;
+    containerToCreateItems.appendChild(li);
+  });
+}
+
+function onInputChange(userInput: string, oldInputValue: string, routes: Array<Route>, conf: FinalConfig): string {
+  if (userInput === oldInputValue) return userInput;
+  if (!userInput.length) {
+    switchClass(false);
+    return userInput;
+  };
+
+  const inputValueFormated = userInput.toLowerCase().trim();
+  const arrayMatches = routes.filter((routeData) =>
+    routeData.label.toLowerCase().trim().includes(inputValueFormated)
+  );
+
+  if (!arrayMatches.length) {
+    switchClass(false);
+    return userInput;
+  };
+
+  switchClass(true);
+  const ul = document.querySelector('.painperdu--modal--body--container--list');
+  ul.innerHTML = '';
+  createItems(arrayMatches, ul, conf);
+
+  return userInput;
+}
+
+function handleEscapeTouch(keyboardTouch: string, painPerduContainerId: string): boolean {
+  if (keyboardTouch === 'escape') {
+    if (document.getElementById(painPerduContainerId)) {
+      document.getElementById(painPerduContainerId).remove();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function handleArrowTouch(keyboardTouch: string, itemIndex: number): number {
+  if (
+    keyboardTouch !== 'arrowup' &&
+    keyboardTouch !== 'arrowdown'
+  ) return itemIndex;
+  const inputForm: HTMLElement = document.getElementById('painperdu-input');
+  if (inputForm !== document.activeElement) return itemIndex;
+
+  const itemList: NodeListOf<HTMLElement> = document.querySelectorAll('.painperdu--modal--body--container--list--item');
+  if (!itemList.length) return itemIndex;
+  
+  if (keyboardTouch === 'arrowup') {
+    if (itemIndex === 0) return itemIndex;
+    itemList[itemIndex].setAttribute('aria-selected', 'false');
+    itemList[itemIndex - 1].setAttribute('aria-selected', 'true');
+    return itemIndex - 1;
+  }
+
+  if (itemIndex === itemList.length - 1) return itemIndex;
+  itemList[itemIndex].setAttribute('aria-selected', 'false');
+  itemList[itemIndex + 1].setAttribute('aria-selected', 'true');
+  return itemIndex + 1;
+}
+
+function handleEnterTouch(itemSelected: number): boolean {
+  const form = document.querySelector('.painperdu--modal--header--form');
+
+  function handleSubmitForm(event) {
+    event.preventDefault();
+    document.getElementById(`is--item--link--${itemSelected}`).click();
+    form.removeEventListener('submit', handleSubmitForm);
+  }
+
+  if (!form) return false;
+  form.addEventListener('submit', handleSubmitForm);
+};
+
+function main(routes: Route[], ops: FinalConfig): void {
   try {
     const rt = checkRoutes(routes);
-    const config = createConfig(container, ops);
+    const config = createConfig(ops);
+    let itemSelect: number = 0;
+    let painperduInputOldValue: string = "";
 
     window.addEventListener('keydown', (e) => {
+      itemSelect = handleArrowTouch(e.code.toLowerCase(), itemSelect);
+      handleEscapeTouch(e.code.toLowerCase(), config.mainContainerId);
+      
       if (!e.metaKey || e.code !== config.shortCutLaunchName) return false;
       if (document.getElementById(config.mainContainerId)) return false;
+      
       createPainPerduContainer(config.mainContainer, config);
-      document.getElementById('painperdu-input').addEventListener('keyup', (event) => {
-        const target = event.target as HTMLInputElement;
-        return onInputChange(target.value, rt);
-      });
+      document.getElementById('painperdu-input').addEventListener(
+        'keyup',
+        debounce(
+          (evt) => {
+            painperduInputOldValue = onInputChange(evt.target.value, painperduInputOldValue, rt, config)
+            handleEnterTouch(itemSelect);
+          },
+          400,
+        ),
+      );
 
       return true;
     });

@@ -9,6 +9,11 @@ export interface Config {
   shortCutLaunchName?: string;
 }
 
+export interface HtmlElementAttribues {
+  name: string;
+  value: string;
+}
+
 export interface Route {
   path: string;
   label: string;
