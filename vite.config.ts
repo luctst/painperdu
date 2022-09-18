@@ -16,7 +16,7 @@ const getPackageNameCamelCase = () => {
 
 export default defineConfig({
   root: path.resolve(__dirname, 'lib'),
-  publicDir: path.parse(process.cwd(), 'lib', 'public', 'assets'),
+  publicDir: path.resolve(process.cwd(), 'lib', 'public', 'assets'),
   server: {
     strictPort: true,
     port: 3000,
@@ -32,7 +32,7 @@ export default defineConfig({
     outDir: path.resolve(process.cwd(), 'dist'),
     emptyOutDir: false,
     lib: {
-      entry: path.resolve(__dirname, 'lib', 'index.js'),
+      entry: path.resolve(__dirname, 'lib', 'index.ts'),
       name: getPackageNameCamelCase(),
     },
   },

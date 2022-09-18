@@ -36,25 +36,31 @@
 	"keywords": [],
 	"scripts": {
 		"dev": "vite --host --debug --mode development",
+		"type": "tsc",
+		"type:watch": "tsc -w",
 		"build": "vite build --mode production",
 		"test": "ava --verbose ./test/*.js",
 		"test:watch": "ava --watch --verbose --fail-fast ./test/*.js",
-		"lint": "npx eslint --cache './lib/**/*.js'",
-		"lint:watch": "esw -w --clear --color --cache './lib/**/*.js'",
-		"lint:fix": "npx eslint --fix './lib/**/*.js'",
-		"style": "prettier -c './lib/**/*.js'",
-		"style:fix": "prettier --c --write './lib/**/*.js'"
+		"lint": "npx eslint --cache './lib/**/*.ts'",
+		"lint:watch": "esw -w --clear --color --cache './lib/**/*.ts'",
+		"lint:fix": "npx eslint --fix './lib/**/*.ts'",
+		"style": "prettier -c './lib/**/*.ts'",
+		"style:fix": "prettier --c --write './lib/**/*.ts'"
 	},
 	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.37.0",
+		"@typescript-eslint/parser": "^5.37.0",
 		"ava": "^4.3.3",
 		"eslint": "^8.23.0",
 		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-airbnb-typescript": "^17.0.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-prettier": "^4.2.1",
 		"eslint-watch": "^8.0.0",
 		"prettier": "^2.7.1",
 		"sass": "^1.54.9",
+		"typescript": "^4.8.3",
 		"vite": "^3.1.0"
 	}
 }
