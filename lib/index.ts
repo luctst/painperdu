@@ -4,35 +4,32 @@ import { Route, FinalConfig, Config, Nullable } from '@/types/index';
 
 const isObject = (obj: object): boolean => obj === Object(obj);
 const objectHasProperty = (obj: object, key: string): boolean | never => {
-  if (!obj || !key) 
-    throw new TypeError('Params error');
+  if (!obj || !key) throw new TypeError('Params error');
   if (!isObject(obj) || typeof key !== 'string')
     throw new TypeError('Params format error');
 
   return Object.prototype.hasOwnProperty.call(obj, key);
-}
+};
 const isInstanceHtmlElement = (object: any): object is HTMLElement => object;
 
 function checkRoutes(routes: Array<Route>): Array<Route> | never {
-  if (!window) 
-    throw new Error('Should be use in an web page');
+  if (!window) throw new Error('Should be use in an web page');
 
-  if (
-    !routes ||
-    !Array.isArray(routes) ||
-    !routes.length
-  ) 
+  if (!routes || !Array.isArray(routes) || !routes.length)
     throw new Error('Routes must be defined and be array and includes objects');
 
   const routesObjectIsGood: boolean = routes.every((routesData) => {
     if (!isObject(routesData)) return false;
-    if (!objectHasProperty(routesData, 'path') || !objectHasProperty(routesData, 'label')) return false;
+    if (!objectHasProperty(routesData, 'path') || !objectHasProperty(routesData, 'label'))
+      return false;
     return true;
   });
 
   if (!routesObjectIsGood)
-    throw new Error('Data passed in routes parameters must be object and includes at least path and label fields');
-  return [ ...routes ];
+    throw new Error(
+      'Data passed in routes parameters must be object and includes at least path and label fields'
+    );
+  return [...routes];
 }
 
 function debounce(fn: (event: string) => boolean, delay: number): () => void {
@@ -40,7 +37,9 @@ function debounce(fn: (event: string) => boolean, delay: number): () => void {
   return function dbInner() {
     clearTimeout(timeoutID);
     const that = this;
-    timeoutID = setTimeout(function() {fn.apply(that, arguments), delay});
+    timeoutID = setTimeout(function () {
+      fn.apply(that, arguments);
+    }, delay);
   };
 }
 
@@ -54,27 +53,24 @@ function createConfig(mainContainer, ops: FinalConfig): FinalConfig {
     originURL: window.location.origin,
   };
 
-  if (!ops) return { ...defaultConfig};
-  const opsFormated: Config = ['shortCutLaunchName'].reduce(
-    (prev, next) => {
-      const toReturn = { ...prev };
-      if (ops[next]) toReturn[next] = ops[next];
-      return toReturn;
-    },
-    {}, 
-  );
+  if (!ops) return { ...defaultConfig };
+  const opsFormated: Config = ['shortCutLaunchName'].reduce((prev, next) => {
+    const toReturn = { ...prev };
+    if (ops[next]) toReturn[next] = ops[next];
+    return toReturn;
+  }, {});
 
   return {
     ...defaultConfig,
     ...opsFormated,
   };
-};
+}
 
 function main(routes: Route[], container: HTMLElement, ops: FinalConfig): void {
   try {
     const rt = checkRoutes(routes);
     const config = createConfig(container, ops);
-    
+
     window.addEventListener('keydown', (e) => {
       if (!e.metaKey || e.code !== config.shortCutLaunchName) return false;
       const section = document.createElement('section');
