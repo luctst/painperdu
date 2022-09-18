@@ -53,7 +53,7 @@ function createConfig(ops: FinalConfig): FinalConfig {
   };
 }
 
-function createPainPerduContainer(container: HTMLElement, conf: FinalConfig,): void {
+function createPainPerduContainer(container: HTMLElement, conf: FinalConfig): void {
   container.classList.add('painperdu--active');
   const section = document.createElement('section');
   const sectionAttributes: Array<HtmlElementAttribues> = [
@@ -136,8 +136,12 @@ function createPainPerduContainer(container: HTMLElement, conf: FinalConfig,): v
 }
 
 function switchClass(shouldShowList: boolean): boolean {
-  const noItems: HTMLElement = document.querySelector('.painperdu--modal--body--nosearch');
-  const itemsContainer: HTMLElement = document.querySelector('.painperdu--modal--body--container');
+  const noItems: HTMLElement = document.querySelector(
+    '.painperdu--modal--body--nosearch'
+  );
+  const itemsContainer: HTMLElement = document.querySelector(
+    '.painperdu--modal--body--container'
+  );
 
   if (shouldShowList) {
     itemsContainer.classList.remove('is--none');
@@ -155,7 +159,11 @@ function switchClass(shouldShowList: boolean): boolean {
   return true;
 }
 
-function createItems(routesMatched: Array<Route>, containerToCreateItems: Element, cf: FinalConfig): void {
+function createItems(
+  routesMatched: Array<Route>,
+  containerToCreateItems: Element,
+  cf: FinalConfig
+): void {
   return routesMatched.forEach((r, index) => {
     const li: HTMLElement = document.createElement('li');
     const liAttributes: Array<HtmlElementAttribues> = [
@@ -175,7 +183,9 @@ function createItems(routesMatched: Array<Route>, containerToCreateItems: Elemen
 
     liAttributes.forEach((attr) => li.setAttribute(attr.name, attr.value));
     li.innerHTML = `
-    <a id="is--item--link--${index}" href="${cf.originURL + r.path}" class="painperdu--modal--body--container--list--item--link">
+    <a id="is--item--link--${index}" href="${
+      cf.originURL + r.path
+    }" class="painperdu--modal--body--container--list--item--link">
       <div class="painperdu--modal--body--container--list--item--link--container">
         <div class="painperdu--modal--body--container--list--item--link--container--iconleft">
           <svg width="20" height="20" viewBox="0 0 20 20"><path d="M17 6v12c0 .52-.2 1-1 1H4c-.7 0-1-.33-1-1V2c0-.55.42-1 1-1h8l5 5zM14 8h-3.13c-.51 0-.87-.34-.87-.87V4" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linejoin="round"></path></svg>
@@ -192,12 +202,17 @@ function createItems(routesMatched: Array<Route>, containerToCreateItems: Elemen
   });
 }
 
-function onInputChange(userInput: string, oldInputValue: string, routes: Array<Route>, conf: FinalConfig): string {
+function onInputChange(
+  userInput: string,
+  oldInputValue: string,
+  routes: Array<Route>,
+  conf: FinalConfig
+): string {
   if (userInput === oldInputValue) return userInput;
   if (!userInput.length) {
     switchClass(false);
     return userInput;
-  };
+  }
 
   const inputValueFormated = userInput.toLowerCase().trim();
   const arrayMatches = routes.filter((routeData) =>
@@ -207,7 +222,7 @@ function onInputChange(userInput: string, oldInputValue: string, routes: Array<R
   if (!arrayMatches.length) {
     switchClass(false);
     return userInput;
-  };
+  }
 
   switchClass(true);
   const ul = document.querySelector('.painperdu--modal--body--container--list');
@@ -229,16 +244,15 @@ function handleEscapeTouch(keyboardTouch: string, painPerduContainerId: string):
 }
 
 function handleArrowTouch(keyboardTouch: string, itemIndex: number): number {
-  if (
-    keyboardTouch !== 'arrowup' &&
-    keyboardTouch !== 'arrowdown'
-  ) return itemIndex;
+  if (keyboardTouch !== 'arrowup' && keyboardTouch !== 'arrowdown') return itemIndex;
   const inputForm: HTMLElement = document.getElementById('painperdu-input');
   if (inputForm !== document.activeElement) return itemIndex;
 
-  const itemList: NodeListOf<HTMLElement> = document.querySelectorAll('.painperdu--modal--body--container--list--item');
+  const itemList: NodeListOf<HTMLElement> = document.querySelectorAll(
+    '.painperdu--modal--body--container--list--item'
+  );
   if (!itemList.length) return itemIndex;
-  
+
   if (keyboardTouch === 'arrowup') {
     if (itemIndex === 0) return itemIndex;
     itemList[itemIndex].setAttribute('aria-selected', 'false');
@@ -263,32 +277,34 @@ function handleEnterTouch(itemSelected: number): boolean {
 
   if (!form) return false;
   form.addEventListener('submit', handleSubmitForm);
-};
+}
 
 function main(routes: Route[], ops: FinalConfig): void {
   try {
     const rt = checkRoutes(routes);
     const config = createConfig(ops);
     let itemSelect: number = 0;
-    let painperduInputOldValue: string = "";
+    let painperduInputOldValue: string = '';
 
     window.addEventListener('keydown', (e) => {
       itemSelect = handleArrowTouch(e.code.toLowerCase(), itemSelect);
       handleEscapeTouch(e.code.toLowerCase(), config.mainContainerId);
-      
+
       if (!e.metaKey || e.code !== config.shortCutLaunchName) return false;
       if (document.getElementById(config.mainContainerId)) return false;
-      
+
       createPainPerduContainer(config.mainContainer, config);
       document.getElementById('painperdu-input').addEventListener(
         'keyup',
-        debounce(
-          (evt) => {
-            painperduInputOldValue = onInputChange(evt.target.value, painperduInputOldValue, rt, config)
-            handleEnterTouch(itemSelect);
-          },
-          400,
-        ),
+        debounce((evt) => {
+          painperduInputOldValue = onInputChange(
+            evt.target.value,
+            painperduInputOldValue,
+            rt,
+            config
+          );
+          handleEnterTouch(itemSelect);
+        }, 400)
       );
 
       return true;
