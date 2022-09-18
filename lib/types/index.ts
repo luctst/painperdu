@@ -1,6 +1,7 @@
 export interface FinalConfig {
   shortCutLaunchName: string;
   mainContainer: HTMLElement;
+  mainContainerId: string;
   originURL: string;
 }
 
