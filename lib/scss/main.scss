@@ -118,6 +118,12 @@ $pain-perdu-link-color: #444950;
           padding: 8px 4px 0;
 
           &--item {
+            &[aria-selected="true"] {
+              a {
+                background-color: $painperdu-main-color;
+              }
+            }
+
             border-radius: 0;
             padding-bottom: 0;
 
@@ -192,6 +198,7 @@ $pain-perdu-link-color: #444950;
       align-items: center;
       background: $painperdu-form-background;
       border-radius: 0 0 8px 8px;
+      box-sizing: border-box;
       box-shadow: $painperdu-footer-shadow;
       display: flex;
       height: $painperdu-footer-height;
