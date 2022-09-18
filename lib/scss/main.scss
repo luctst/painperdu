@@ -1,3 +1,252 @@
-body {
+$painperdu-container-background: rgba(101, 108, 133, 0.8);
+$painperdu-modal-background: #f5f6f7;
+$painperdu-modal-boxshadow: inset 1px 1px 0 0 hsla(0, 0%, 100%, 0.5), 0 3px 8px 0 #555a64;
+$painperdu-modal-width: 560px;
+$painperdu-modal-height: 600px;
+$painperdu-spacing: 12px;
+$painperdu-main-color: #fcec57;
+$painperdu-form-background: #fff;
+$painperdu-form-boxshadow: inset 0 0 0 2px $painperdu-main-color;
+$painperdu-form-height: 56px;
+$painperdu-input-color: #1c1e21;
+$painperdu-footer-height: 44px;
+$painperdu-footer-shadow: 0 -1px 0 0 #e0e3e8,0 -3px 6px 0 rgba(69,98,155,0.12); 
+$painperdu-search-muted: #6c757d;
+$painperdu--key--gradient: linear-gradient(-225deg,#d5dbe4,#f8f8f8);
+$pain-perdu-link-border-color: #dee2e6;
+$pain-perdu-link-color: #444950;
+
+.painperdu--active {
+  overflow: hidden !important;
+}
+
+.is--block {
+  display: block;
+}
+
+.is--none {
+  display: none;
+}
+
+#painperdu {
+  position: fixed;
+  top: 0;
+  z-index: 2000;
+  background-color: $painperdu-container-background;
+  height: 100vh;
+  left: 0;
+  width: 100vw;
+
+  .painperdu--modal {
+    background-color: $painperdu-modal-background;
+    border-radius: 6px;
+    box-shadow: $painperdu-modal-boxshadow;
+    margin: 60px auto auto;
     position: relative;
+    max-width: $painperdu-modal-width;
+
+    &--header {
+      display: flex;
+      padding: $painperdu-spacing $painperdu-spacing 0;
+
+      &--form {
+        align-items: center;
+        background-color: $painperdu-form-background;
+        border-radius: .375rem;
+        box-shadow: $painperdu-form-boxshadow;
+        display: flex;
+        height: $painperdu-form-height;
+        margin: 0;
+        padding: 0 $painperdu-spacing;
+        position: relative;
+        width: 100%;
+
+        &--label {
+          align-items: center;
+          display: flex;
+          color: $painperdu-main-color;
+          justify-content: center;
+          margin: 0;
+          padding: 0;
+
+          svg {
+            height: 26px;
+            stroke-width: 1.6;
+            width: 26px;
+          }
+        }
+
+        &--input {
+          background: transparent;
+          border: 0;
+          color: $painperdu-input-color;
+          flex: 1;
+          font-size: 1.2em;
+          height: 100%;
+          outline: none;
+          padding: 0 0 0 8px;
+          width: 80%;
+          outline-offset: -2px;
+        }
+      }
+    }
+
+    &--body {
+      max-height: calc($painperdu-modal-height - $painperdu-form-height - $painperdu-spacing - $painperdu-footer-height);
+      min-height: $painperdu-spacing;
+      padding: 0 $painperdu-spacing;
+      scrollbar-width: thin;
+      overflow-y: auto;
+
+      &--nosearch {
+        font-size: .9rem;
+        margin: 0 auto;
+        padding: 36px 0;
+        text-align: center;
+        width: 80%;
+
+        p {
+          color: $painperdu-search-muted;
+        }
+      }
+
+      &--container {
+        &--list {
+          list-style: none;
+          margin: 0;
+          margin-bottom: $painperdu-spacing;
+          padding: 8px 4px 0;
+
+          &--item {
+            border-radius: 0;
+            padding-bottom: 0;
+
+            &--link {
+              &:hover {
+                background-color: $painperdu-main-color;
+              }
+
+              background: $painperdu-form-background;
+              border: solid $pain-perdu-link-border-color;
+              box-shadow: none;
+              border-width: 0 1px 1px;
+              display: block;
+              padding-left: $painperdu-spacing;
+              width: 100%;
+              text-decoration: none;
+
+              &--container {
+                align-items: center;
+                color: $pain-perdu-link-color;
+                display: flex;
+                height: $painperdu-form-height;
+                padding: 0 $painperdu-spacing 0 0;
+
+                &--iconleft {
+                  align-items: center;
+                  display: flex;
+                  color: $painperdu-search-muted;
+                  height: 20px;
+                  stroke-width: 1.4;
+                  width: 20px;
+                }
+
+                &--content {
+                  display: flex;
+                  flex: 1 1 auto;
+                  flex-direction: column;
+                  font-weight: 500;
+                  justify-content: center;
+                  line-height: 1.2em;
+                  margin: 0 8px;
+                  overflow-x: hidden;
+                  position: relative;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  width: 80%;
+
+                  span {
+                    font-size: .9em;
+                  }
+                }
+
+                &--iconright {
+                  align-items: center;
+                  display: flex;
+                  height: 22px;
+                  width: 22px;
+
+                  svg {
+                    height: 18px;
+                    width: 18px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &--footer {
+      align-items: center;
+      background: $painperdu-form-background;
+      border-radius: 0 0 8px 8px;
+      box-shadow: $painperdu-footer-shadow;
+      display: flex;
+      height: $painperdu-footer-height;
+      justify-content: space-between;
+      padding: 0 $painperdu-spacing;
+      position: relative;
+      width: 100%;
+      z-index: 300;
+
+      &--commands {
+        color: $painperdu-search-muted;
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        &--li {
+          align-items: center;
+          display: flex;
+          margin-right: .8em;
+
+          &--key {
+            align-items: center;
+            background: $painperdu--key--gradient;
+            background-color: rgba(0,0,0,0.1);
+            background-image: none;
+            box-shadow: none;
+            border: 0;
+            border-radius: 2px;
+            color: $painperdu-search-muted;
+            display: flex;
+            font-size: .875rem;
+            height: 18px;
+            justify-content: center;
+            margin-right: .4em;
+            padding: 0 0 1px;
+            width: 20px;
+          }
+
+          span {
+            color: $painperdu-search-muted;
+            font-size: .75em;
+            line-height: 1.6em;
+          }
+        }
+      }
+
+      &--thanks {
+        p {
+          color: $painperdu-search-muted;
+          font-size: .75em;
+          margin: 0;
+          line-height: 1.6em;
+        }
+      }
+    }
+  }
 }
