@@ -167,12 +167,12 @@ function handleMouseOver(evt: Event, config: FinalConfig): boolean {
   const itemIndex = parseInt(target.firstElementChild.id.split('--')[3], 10);
   const itemParent = document.querySelector('.painperdu--modal--body--container--list');
   if (ariaSelected === 'true' && itemIndex === config.itemSelected) return true;
-  
+
   itemParent.children.item(config.itemSelected).setAttribute('aria-selected', 'false');
   target.setAttribute('aria-selected', 'true');
   config.itemSelected = itemIndex;
   return true;
-};
+}
 
 function createItems(
   routesMatched: Array<Route>,
@@ -319,7 +319,7 @@ function painPerdu(routes: Route[], ops: FinalConfig): void {
             evt.target.value,
             painperduInputOldValue,
             rt,
-            config,
+            config
           );
           handleEnterTouch(config);
         }, 400)
