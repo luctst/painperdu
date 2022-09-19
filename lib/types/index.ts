@@ -3,6 +3,7 @@ export interface FinalConfig {
   mainContainer: HTMLElement;
   mainContainerId: string;
   originURL: string;
+  itemSelected: number;
 }
 
 export interface Config {
