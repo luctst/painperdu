@@ -279,7 +279,7 @@ function handleEnterTouch(itemSelected: number): boolean {
   form.addEventListener('submit', handleSubmitForm);
 }
 
-function main(routes: Route[], ops: FinalConfig): void {
+function painPerdu(routes: Route[], ops: FinalConfig): void {
   try {
     const rt = checkRoutes(routes);
     const config = createConfig(ops);
@@ -314,4 +314,4 @@ function main(routes: Route[], ops: FinalConfig): void {
   }
 }
 
-export default main;
+export default painPerdu;
