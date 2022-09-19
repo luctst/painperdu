@@ -5,7 +5,13 @@
 ## Usage
 **With Javascript vanilla**
 
-Include our CDN inside your `.html` files
+Include our CDN inside your `.html` files, require browser versions:
+
+* Chrome >=87
+* Firefox >=78
+* Safari >=13
+* Edge >=88
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -14,10 +20,12 @@ Include our CDN inside your `.html` files
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pain perdu with CDN</title>
+    <link rel="stylesheet" href="https://unpkg.com/painperdu/dist/style.css" crossorigin="anonymous">
+    <!-- DO NOT FORGET TO ADD THIS LINE ⬆️ -->
 </head>
 <body>
-    <script src="https://unpkg.com/painperdu/dist/painperdu.umd.js"></script>
-    <script>
+    <script type="module">
+        import painPerdu from 'https://unpkg.com/painperdu/dist/painperdu.js';
         // You can now use Pain perdu by pressing CMD + K
         painPerdu([
             { path: '/home', label: 'hm' },
