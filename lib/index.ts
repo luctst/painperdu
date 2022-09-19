@@ -38,6 +38,7 @@ function createConfig(ops: FinalConfig): FinalConfig {
     mainContainerId: 'painperdu',
     mainContainer: document.body,
     originURL: window.location.origin,
+    itemSelected: 0,
   };
 
   if (!ops) return { ...defaultConfig };
@@ -159,6 +160,20 @@ function switchClass(shouldShowList: boolean): boolean {
   return true;
 }
 
+function handleMouseOver(evt: Event, config: FinalConfig): boolean {
+  evt.stopPropagation();
+  const target = evt.target as HTMLTextAreaElement;
+  const ariaSelected = target.getAttribute('aria-selected');
+  const itemIndex = parseInt(target.firstElementChild.id.split('--')[3], 10);
+  const itemParent = document.querySelector('.painperdu--modal--body--container--list');
+  if (ariaSelected === 'true' && itemIndex === config.itemSelected) return true;
+  
+  itemParent.children.item(config.itemSelected).setAttribute('aria-selected', 'false');
+  target.setAttribute('aria-selected', 'true');
+  config.itemSelected = itemIndex;
+  return true;
+};
+
 function createItems(
   routesMatched: Array<Route>,
   containerToCreateItems: Element,
@@ -198,6 +213,8 @@ function createItems(
         </div>
       </div>
     </a>`;
+
+    li.addEventListener('mouseenter', (e) => handleMouseOver(e, cf));
     containerToCreateItems.appendChild(li);
   });
 }
@@ -243,35 +260,37 @@ function handleEscapeTouch(keyboardTouch: string, painPerduContainerId: string):
   return true;
 }
 
-function handleArrowTouch(keyboardTouch: string, itemIndex: number): number {
-  if (keyboardTouch !== 'arrowup' && keyboardTouch !== 'arrowdown') return itemIndex;
+function handleArrowTouch(keyboardTouch: string, conf: FinalConfig): boolean {
+  if (keyboardTouch !== 'arrowup' && keyboardTouch !== 'arrowdown') return true;
   const inputForm: HTMLElement = document.getElementById('painperdu-input');
-  if (inputForm !== document.activeElement) return itemIndex;
+  if (inputForm !== document.activeElement) return true;
 
   const itemList: NodeListOf<HTMLElement> = document.querySelectorAll(
     '.painperdu--modal--body--container--list--item'
   );
-  if (!itemList.length) return itemIndex;
+  if (!itemList.length) return true;
 
   if (keyboardTouch === 'arrowup') {
-    if (itemIndex === 0) return itemIndex;
-    itemList[itemIndex].setAttribute('aria-selected', 'false');
-    itemList[itemIndex - 1].setAttribute('aria-selected', 'true');
-    return itemIndex - 1;
+    if (conf.itemSelected === 0) return true;
+    itemList[conf.itemSelected].setAttribute('aria-selected', 'false');
+    itemList[conf.itemSelected - 1].setAttribute('aria-selected', 'true');
+    conf.itemSelected -= 1;
+    return true;
   }
 
-  if (itemIndex === itemList.length - 1) return itemIndex;
-  itemList[itemIndex].setAttribute('aria-selected', 'false');
-  itemList[itemIndex + 1].setAttribute('aria-selected', 'true');
-  return itemIndex + 1;
+  if (conf.itemSelected === itemList.length - 1) return true;
+  itemList[conf.itemSelected].setAttribute('aria-selected', 'false');
+  itemList[conf.itemSelected + 1].setAttribute('aria-selected', 'true');
+  conf.itemSelected += 1;
+  return true;
 }
 
-function handleEnterTouch(itemSelected: number): boolean {
+function handleEnterTouch(cof: FinalConfig): boolean {
   const form = document.querySelector('.painperdu--modal--header--form');
 
   function handleSubmitForm(event) {
     event.preventDefault();
-    document.getElementById(`is--item--link--${itemSelected}`).click();
+    document.getElementById(`is--item--link--${cof.itemSelected}`).click();
     form.removeEventListener('submit', handleSubmitForm);
   }
 
@@ -283,11 +302,10 @@ function painPerdu(routes: Route[], ops: FinalConfig): void {
   try {
     const rt = checkRoutes(routes);
     const config = createConfig(ops);
-    let itemSelect: number = 0;
     let painperduInputOldValue: string = '';
 
     window.addEventListener('keydown', (e) => {
-      itemSelect = handleArrowTouch(e.code.toLowerCase(), itemSelect);
+      handleArrowTouch(e.code.toLowerCase(), config);
       handleEscapeTouch(e.code.toLowerCase(), config.mainContainerId);
 
       if (!e.metaKey || e.code !== config.shortCutLaunchName) return false;
@@ -301,9 +319,9 @@ function painPerdu(routes: Route[], ops: FinalConfig): void {
             evt.target.value,
             painperduInputOldValue,
             rt,
-            config
+            config,
           );
-          handleEnterTouch(itemSelect);
+          handleEnterTouch(config);
         }, 400)
       );
 
