@@ -128,10 +128,6 @@ $pain-perdu-link-color: #444950;
             padding-bottom: 0;
 
             &--link {
-              &:hover {
-                background-color: $painperdu-main-color;
-              }
-
               background: $painperdu-form-background;
               border: solid $pain-perdu-link-border-color;
               box-shadow: none;
