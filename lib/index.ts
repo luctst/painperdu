@@ -260,6 +260,22 @@ function handleEscapeTouch(keyboardTouch: string, painPerduContainerId: string):
   return true;
 }
 
+function handleScrollBar(itemSelect: number, arrowTouch: string): boolean {
+  const containerScrollable = document.querySelector('.painperdu--modal--body');
+  const itemSelected = document.getElementById(`is--item--link--${itemSelect}`).parentElement;
+  const containerScrollableScrollPx = (containerScrollable.clientHeight + containerScrollable.scrollTop);
+
+  if (arrowTouch === 'down') {
+    if (itemSelected.offsetTop >= containerScrollableScrollPx)
+      containerScrollable.scroll({ top: containerScrollable.scrollTop + itemSelected.clientHeight, });
+    return true;
+  }
+  
+  if (itemSelected.offsetTop <= containerScrollableScrollPx)
+    containerScrollable.scroll({ top: containerScrollable.scrollTop - itemSelected.clientHeight, });
+  return true;
+}
+
 function handleArrowTouch(keyboardTouch: string, conf: FinalConfig): boolean {
   if (keyboardTouch !== 'arrowup' && keyboardTouch !== 'arrowdown') return true;
   const inputForm: HTMLElement = document.getElementById('painperdu-input');
@@ -275,6 +291,7 @@ function handleArrowTouch(keyboardTouch: string, conf: FinalConfig): boolean {
     itemList[conf.itemSelected].setAttribute('aria-selected', 'false');
     itemList[conf.itemSelected - 1].setAttribute('aria-selected', 'true');
     conf.itemSelected -= 1;
+    handleScrollBar(conf.itemSelected, 'up');
     return true;
   }
 
@@ -282,6 +299,7 @@ function handleArrowTouch(keyboardTouch: string, conf: FinalConfig): boolean {
   itemList[conf.itemSelected].setAttribute('aria-selected', 'false');
   itemList[conf.itemSelected + 1].setAttribute('aria-selected', 'true');
   conf.itemSelected += 1;
+  handleScrollBar(conf.itemSelected, 'down');
   return true;
 }
 
