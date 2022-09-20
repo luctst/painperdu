@@ -262,17 +262,24 @@ function handleEscapeTouch(keyboardTouch: string, painPerduContainerId: string):
 
 function handleScrollBar(itemSelect: number, arrowTouch: string): boolean {
   const containerScrollable = document.querySelector('.painperdu--modal--body');
-  const itemSelected = document.getElementById(`is--item--link--${itemSelect}`).parentElement;
-  const containerScrollableScrollPx = (containerScrollable.clientHeight + containerScrollable.scrollTop);
+  const itemSelected = document.getElementById(
+    `is--item--link--${itemSelect}`
+  ).parentElement;
+  const containerScrollableScrollPx =
+    containerScrollable.clientHeight + containerScrollable.scrollTop;
 
   if (arrowTouch === 'down') {
     if (itemSelected.offsetTop >= containerScrollableScrollPx)
-      containerScrollable.scroll({ top: containerScrollable.scrollTop + itemSelected.clientHeight, });
+      containerScrollable.scroll({
+        top: containerScrollable.scrollTop + itemSelected.clientHeight,
+      });
     return true;
   }
-  
+
   if (itemSelected.offsetTop <= containerScrollableScrollPx)
-    containerScrollable.scroll({ top: containerScrollable.scrollTop - itemSelected.clientHeight, });
+    containerScrollable.scroll({
+      top: containerScrollable.scrollTop - itemSelected.clientHeight,
+    });
   return true;
 }
 
