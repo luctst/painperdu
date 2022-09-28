@@ -1,0 +1,14 @@
+{
+    "include": ["lib/**/*.ts"],
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["lib/*"]
+        },
+        "lib": ["es2015", "DOM"],
+        "skipLibCheck": true,
+        "isolatedModules": true,
+        "types": ["vite/client"],
+        "noEmit": true,
+    }
+}

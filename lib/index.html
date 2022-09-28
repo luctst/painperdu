@@ -4,17 +4,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <title>Pain Perdu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #app {
+            align-items: center;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            width: 100vw;
+        }
+        #app > div > h1 {
+            font-size: 4rem;
+            margin-bottom: 0;
+        }
+        #app > div > div {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <script type="module" src="/index.js"></script>
+    <section id="app">
+        <div>
+            <h1>Welcome on Pain Perdu</h1>
+            <div>
+                Press
+                <kbd>CMD</kbd>
+                +
+                <kbd>K</kbd>
+                for open modal and load new route
+            </div>
+            <div id="route">route - </div>
+        </div>
+    </section>
+    <script>
+        document.getElementById('route').textContent += window.location.pathname;
+    </script>
+    <script type="module" src="/index.ts"></script>
     <script type="module">
-        import main from './index.js';
-        main([
-            { path: '/test', 'label': 'test' },
-        ]);
+        import painPerdu from './index.ts';
+        painPerdu(
+            [
+                { path: '/home', label: 'home' },
+                { path: '/lol', label: 'll' },
+                { path: '/mdr', label: 'll' },
+                { path: '/flex', label: 'll' },
+                { path: '/l', label: 'l' },
+                { path: '/s', label: 'mp' },
+                { path: '/lol', label: 'll' },
+                { path: '/mdr', label: 'll' },
+                { path: '/flex', label: 'll' },
+                { path: '/l', label: 'l' },
+                { path: '/s', label: 'mp' },
+                { path: '/lol', label: 'll' },
+                { path: '/mdr', label: 'll' },
+                { path: '/flex', label: 'll' },
+                { path: '/l', label: 'l' },
+                { path: '/s', label: 'mp' },
+            ],
+            document.body,
+        );
     </script>
 </body>
 </html>

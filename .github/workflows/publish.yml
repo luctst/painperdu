@@ -41,6 +41,9 @@ jobs:
 
       - name: Run linter 👀
         run: npm run lint
+      
+      - name: Check type 😬
+        run: npm run type
         
   publish-npm:
     needs: ci
