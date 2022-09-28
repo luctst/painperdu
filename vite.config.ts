@@ -28,6 +28,7 @@ export default defineConfig({
     },
   },
   build: {
+    minify: true,
     assetsDir: path.resolve(process.cwd(), 'lib', 'public', 'assets'),
     outDir: path.resolve(process.cwd(), 'dist'),
     emptyOutDir: false,
