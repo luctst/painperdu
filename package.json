@@ -2,7 +2,8 @@
   "private": true,
   "name": "painperdu",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "pnpm run --filter './packages/*' --if-present -r lint",
+    "typecheck": "pnpm run --filter './packages/*' --if-present -r typecheck"
   },
   "engines": {
     "node": ">=18.0.0",

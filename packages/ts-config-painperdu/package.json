@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "ts-config-painperdu",
+  "version": "1.0.0",
+  "files": [
+    "./base.json",
+    "./react.json"
+  ]
+}
