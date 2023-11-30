@@ -3,7 +3,9 @@
   "name": "painperdu",
   "scripts": {
     "lint": "pnpm run --filter './packages/*' --if-present -r lint",
-    "typecheck": "pnpm run --filter './packages/*' --if-present -r typecheck"
+    "typecheck": "pnpm run --filter './packages/*' --if-present -r typecheck",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -14,6 +16,18 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
-    "husky": "^8.0.3"
+    "@storybook/addon-essentials": "^7.6.2",
+    "@storybook/addon-interactions": "^7.6.2",
+    "@storybook/addon-links": "^7.6.2",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.6.2",
+    "@storybook/react": "^7.6.2",
+    "@storybook/react-vite": "^7.6.2",
+    "@storybook/test": "^7.6.2",
+    "husky": "^8.0.3",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.6.2"
   }
 }
