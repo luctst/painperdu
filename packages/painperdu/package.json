@@ -1,0 +1,26 @@
+{
+  "name": "painperdu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint \"src/**/*.{ts, vue}\" --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-config-painperdu": "workspace:^",
+    "ts-config-painperdu": "workspace:^"
+  },
+  "dependencies": {
+    "@types/node": "^20.10.1",
+    "@types/react": "^18.2.39",
+    "@types/react-dom": "^18.2.17",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "*"
+  }
+}

@@ -1,72 +1,19 @@
 {
-	"type": "module",
-	"name": "painperdu",
-	"version": "1.2.0",
-	"description": "Shortcut for routes",
-	"files": [
-		"./dist/**/*"
-	],
-	"main": "./dist/painperdu.umd.cjs",
-	"module": "./dist/painperdu.js",
-	"exports": {
-		".": {
-			"import": "./dist/painperdu.js",
-			"require": "./dist/painperdu.umd.cjs"
-		}
-	},
-	"author": "luctst",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://www.github.com/luctst/painperdu"
-	},
-	"bugs": {
-		"url": "https://www.github.com/luctst/painperdu/issues"
-	},
-	"homepage": "https://www.github.com/luctst/painperdu",
-	"engines": {
-		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
-	},
-	"eslintIgnore": [
-		"lib/build/"
-	],
-	"ava": {
-		"cache": true
-	},
-	"keywords": [],
-	"scripts": {
-		"dev": "vite --host --debug --mode development",
-		"type": "tsc",
-		"type:watch": "tsc -w",
-		"build": "vite build --mode production",
-		"test": "ava --verbose ./test/*.js",
-		"test:watch": "ava --watch --verbose --fail-fast ./test/*.js",
-		"lint": "npx eslint --cache './lib/**/*.ts'",
-		"lint:watch": "esw -w --clear --color --cache './lib/**/*.ts'",
-		"lint:fix": "npx eslint --fix './lib/**/*.ts'",
-		"style": "prettier -c './lib/**/*.ts'",
-		"style:fix": "prettier --c --write './lib/**/*.ts'"
-	},
-	"devDependencies": {
-		"@commitlint/cli": "^17.1.2",
-		"@commitlint/config-conventional": "^17.1.0",
-		"@typescript-eslint/eslint-plugin": "^5.37.0",
-		"@typescript-eslint/parser": "^5.37.0",
-		"ava": "^4.3.3",
-		"eslint": "^8.23.0",
-		"eslint-config-airbnb-base": "^15.0.0",
-		"eslint-config-airbnb-typescript": "^17.0.0",
-		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-import": "^2.26.0",
-		"eslint-plugin-prettier": "^4.2.1",
-		"eslint-watch": "^8.0.0",
-		"husky": "^8.0.1",
-		"prettier": "^2.7.1",
-		"sass": "^1.54.9",
-		"typescript": "^4.8.3",
-		"vite": "^3.1.0"
-	},
-	"dependencies": {
-		"lodash.debounce": "^4.0.8"
-	}
+  "private": true,
+  "name": "painperdu",
+  "scripts": {
+    "lint": "pnpm run --filter './packages/*' --if-present -r lint",
+    "typecheck": "pnpm run --filter './packages/*' --if-present -r typecheck"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": "please use pnpm",
+    "yarn": "please use pnpm"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "husky": "^8.0.3"
+  }
 }

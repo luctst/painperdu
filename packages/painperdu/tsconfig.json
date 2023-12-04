@@ -1,0 +1,20 @@
+{
+  "extends": "ts-config-painperdu/react.json",
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"src/**/*.jsx",
+		"src/index.ts"
+	],
+	"exclude": [
+		"src/**/*.d.ts"
+	],
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"@/*": [
+				"src/*"
+			]
+		}
+	}
+}
