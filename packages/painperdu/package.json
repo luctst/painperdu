@@ -5,14 +5,26 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint \"src/**/*.{ts, vue}\" --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.6.3",
+    "@storybook/addon-interactions": "^7.6.3",
+    "@storybook/addon-links": "^7.6.3",
+    "@storybook/addon-onboarding": "^1.0.9",
+    "@storybook/blocks": "^7.6.3",
+    "@storybook/react": "^7.6.3",
+    "@storybook/react-vite": "^7.6.3",
+    "@storybook/test": "^7.6.3",
     "eslint": "^8.0.1",
     "eslint-config-painperdu": "workspace:^",
+    "eslint-plugin-storybook": "^0.6.15",
+    "storybook": "^7.6.3",
     "ts-config-painperdu": "workspace:^"
   },
   "dependencies": {
