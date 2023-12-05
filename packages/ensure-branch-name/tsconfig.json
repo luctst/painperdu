@@ -1,0 +1,11 @@
+{
+  "extends": "ts-config-painperdu/base.json",
+	"include": [
+	 "index.ts"
+	],
+	"compilerOptions": {
+	   "outDir": "dist",
+			"noEmit": false,
+			"module": "es2020"
+	}
+}

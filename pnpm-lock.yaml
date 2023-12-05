@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      ensure-branch-name:
+        specifier: workspace:^
+        version: link:packages/ensure-branch-name
     devDependencies:
       '@commitlint/cli':
         specifier: ^17.4.4
@@ -17,6 +21,24 @@ importers:
       husky:
         specifier: ^8.0.3
         version: 8.0.3
+
+  packages/ensure-branch-name:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.10.1
+        version: 20.10.1
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      ts-config-painperdu:
+        specifier: workspace:^
+        version: link:../ts-config-painperdu
+      tsx:
+        specifier: ^4.6.2
+        version: 4.6.2
+      typescript:
+        specifier: '*'
+        version: 5.3.2
 
   packages/eslint-config-painperdu:
     devDependencies:
@@ -136,7 +158,7 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
-      '@jridgewell/trace-mapping': 0.3.9
+      '@jridgewell/trace-mapping': 0.3.20
     dev: true
 
   /@aw-web-design/x-default-browser@1.4.126:
@@ -4737,6 +4759,11 @@ packages:
       supports-color: 7.2.0
     dev: true
 
+  /chalk@5.3.0:
+    resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+    dev: true
+
   /check-error@1.0.3:
     resolution: {integrity: sha512-iKEoDYaRmd1mxM90a2OEfWhjsjPpYPuQ+lMYsoxB126+t8fw7ySEO48nmDg5COTjxDI65/Y2OWpeEHk3ZOe8zg==}
     dependencies:
@@ -9171,6 +9198,17 @@ packages:
     dependencies:
       tslib: 1.14.1
       typescript: 5.3.2
+    dev: true
+
+  /tsx@4.6.2:
+    resolution: {integrity: sha512-QPpBdJo+ZDtqZgAnq86iY/PD2KYCUPSUGIunHdGwyII99GKH+f3z3FZ8XNFLSGQIA4I365ui8wnQpl8OKLqcsg==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+    dependencies:
+      esbuild: 0.18.20
+      get-tsconfig: 4.7.2
+    optionalDependencies:
+      fsevents: 2.3.3
     dev: true
 
   /tween-functions@1.2.0:
