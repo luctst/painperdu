@@ -1,24 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const PainPerdu = () => {
-  const [count, setCount] = React.useState(0);
+  const [isModal, setModal] = useState<boolean>(false);
 
-	function incrementCount() {
-		setCount(count + 1);
-	}
+	const handleEsc = (event: KeyboardEvent): void => {
+		console.log("🚀 ~ file: PainPerdu.tsx:7 ~ handleEsc ~ event:", event)
+		const isMetaKey: boolean = event.metaKey
+		if (event.code === 'KeyK' && isMetaKey) setModal(true)
+	};
 
-  return (
-		<section>
-			<h1> Ca part sur du pain perdu </h1>
-			<button
-				style={{ marginLeft: '10%' }}
-				onClick={incrementCount}
-			>
-				Go +1
-			</button>
-			<div style={{ textAlign: 'center' }}>
-				{ count }
-			</div>
-		</section>
-  );
+ useEffect(() => {
+	window.addEventListener('keydown', handleEsc);
+ })
+
+	return (
+		<section></section>
+	);
 };
