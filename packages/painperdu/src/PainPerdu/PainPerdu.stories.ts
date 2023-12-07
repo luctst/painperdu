@@ -1,4 +1,4 @@
-import { PainPerdu } from './PainPerdu';
+import { PainPerdu } from './painPerdu';
 
 export default {
   title: 'Example/PainPerdu',

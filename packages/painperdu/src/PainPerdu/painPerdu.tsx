@@ -4,8 +4,7 @@ export const PainPerdu = () => {
   const [count, setCount] = React.useState(0);
 
 	function incrementCount() {
-		setCount(count + 1)
-		console.log("🚀 ~ file: PainPerdu.jsx:8 ~ incrementCount ~ count:", count)
+		setCount(count + 1);
 	}
 
   return (
