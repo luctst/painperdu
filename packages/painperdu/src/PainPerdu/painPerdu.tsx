@@ -1,16 +1,27 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react';
 import type { FC } from 'react'
 import { createPortal } from 'react-dom';
+import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
+import type { PathItem } from '../types';
 import { PainPerduSearchBar } from '../components/PainPerduSearchBar'
 import { PainPerduFooter } from '../components/PainPerduFooter'
 import '../index.css'
 
 interface Props {
+  pathItems: PathItem[]
   teleport: string
 }
 
-export const PainPerdu: FC<Props> = ({ teleport }) => {
-  const [isModalActive, setModal] = useState<boolean>(false)
+const DefaultResults = () => (
+	<div className="painperdu--modal--body--nosearch is--block">
+		<p>Start writing to search routes</p>
+	</div>
+)
+
+export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
+	const [isModalActive, setModal] = useState<boolean>(false)
+	const [itemsList, setItemsList] = useState<PathItem[]>([])
+
 
 	const handleEsc = (event: KeyboardEvent): void => {
 		const keyPressed = event.code
@@ -29,12 +40,21 @@ export const PainPerdu: FC<Props> = ({ teleport }) => {
 		setModal(isModal)
 	}
 
+	const displayPathItems = (event: Event): void => {
+		if ((event.target as HTMLInputElement).value === '') {
+			setItemsList([])
+			return
+		}
+		setItemsList(pathItems.filter((pathItem: PathItem) => pathItem.alias.includes((event.target as HTMLInputElement).value)))
+	}
+
 	useEffect(() => {
 		window.addEventListener('keydown', handleEsc)
 		return () => {
 			window.removeEventListener('keydown', handleEsc)
 		}
 	})
+
 
  if (!isModalActive) return (null)
 
@@ -55,10 +75,9 @@ export const PainPerdu: FC<Props> = ({ teleport }) => {
 								<PainPerduSearchBar />
 								<main className="min-h-3 py-0 px-3 overflow-y-auto">
 									<div className="text-sm	my-0 mx-auto py-14 px-0 text-center w-4/5">
-										<p className="text-slate-500">Start writing to search routes</p>
-									</div>
-									<div>
-										<ul className="flex list-none	m-0 p-0"></ul>
+										{
+											itemsList.length ? <PainPerduListItem pathItem={itemsList} /> : <DefaultResults />
+										}
 									</div>
 								</main>
 								<PainPerduFooter />
