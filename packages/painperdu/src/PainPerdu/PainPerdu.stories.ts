@@ -10,8 +10,20 @@ export default {
 
   export const CmdK = {
     args: {
-      primary: true,
-      label: 'Button',
-      teleport: "#popper-root"
+      teleport: "#popper-root",
+      pathItems: [
+        {
+          alias: 'hm',
+          path: '/home',
+        },
+        {
+          alias: 'abt',
+          path: '/about',
+        },
+        {
+          alias: 'ct',
+          path: '/contact',
+        },
+      ]
     },
   };
