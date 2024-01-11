@@ -16,7 +16,7 @@ import chalk from 'chalk';
 
   try {
     const cliCmdRes = await promisfyExec('git rev-parse --abbrev-ref HEAD');
-    const regex = new RegExp('^(fix|feature|hotfix|release|chore|style)/[a-z-0-9\\.]{3,}$');
+    const regex = new RegExp('^(fix|feature|hotfix|release|chore|style|refactor|)/[a-z-0-9\\.]{3,}$');
 
     if (cliCmdRes instanceof Error) {
       throw cliCmdRes;
