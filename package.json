@@ -13,7 +13,7 @@
   },
   "license": "ISC",
   "lint-staged": {
-    "*.ts": "pnpm run lint"
+    "*.{ts, tsx, jxs}": "pnpm run lint"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
