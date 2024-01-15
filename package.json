@@ -12,10 +12,14 @@
     "yarn": "please use pnpm"
   },
   "license": "ISC",
+  "lint-staged": {
+    "*.{ts, tsx, jxs}": "pnpm run lint"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
-    "husky": "^8.0.3"
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0"
   },
   "dependencies": {
     "ensure-branch-name": "workspace:^"

@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm run lint
+pnpm lint-staged
 pnpm node node_modules/ensure-branch-name/dist/index.js
