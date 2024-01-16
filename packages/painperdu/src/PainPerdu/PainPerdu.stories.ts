@@ -17,6 +17,10 @@ export default {
           path: '/home',
         },
         {
+          alias: 'hq',
+          path: '/qg',
+        },
+        {
           alias: 'abt',
           path: '/about',
         },
