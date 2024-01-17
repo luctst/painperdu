@@ -22,6 +22,10 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 	const [isModalActive, setModal] = useState<boolean>(false)
 	const [itemsList, setItemsList] = useState<PathItem[]>([])
 
+	const closeModal = (): void => {
+		setModal(false)
+		setItemsList([])
+	}
 
 	const handleEsc = (event: KeyboardEvent): void => {
 		const keyPressed = event.code
