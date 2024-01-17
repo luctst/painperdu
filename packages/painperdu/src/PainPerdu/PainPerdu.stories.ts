@@ -15,18 +15,22 @@ export default {
         {
           alias: 'hm',
           path: '/home',
+          isSelected: false,
         },
         {
           alias: 'hq',
           path: '/qg',
+          isSelected: false,
         },
         {
           alias: 'abt',
           path: '/about',
+          isSelected: false,
         },
         {
           alias: 'ct',
           path: '/contact',
+          isSelected: false,
         },
       ]
     },
