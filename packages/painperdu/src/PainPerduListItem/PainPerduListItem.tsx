@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import type { FC } from 'react'
 import type { PathItem } from '../types';
-import '../index.css'
 
 interface Props {
   pathItem: PathItem[],
