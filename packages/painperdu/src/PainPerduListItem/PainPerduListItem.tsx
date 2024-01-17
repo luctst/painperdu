@@ -1,14 +1,29 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import type { FC } from 'react'
 import type { PathItem } from '../types';
 import '../index.css'
 
 interface Props {
-  pathItem: PathItem[]
+  pathItem: PathItem[],
 }
 
 export const PainPerduListItem: FC<Props> = ({ pathItem }) => {
- useEffect(() => {})
+  const [selectedPath, setSelectedPath] = useState<string>('')
+  const [pathClass, setPathClass] = useState<string>('')
+
+ const getSelectedPath = (path: PathItem, index: number): void => {
+  setSelectedPath(path.alias)
+
+  if (selectedPath === path.alias) {
+    pathItem[index].isSelected = true
+    setPathClass('bg-yellow-300')
+  }
+ }
+
+ const cleanSelectedPath = (index: number): void => {
+  pathItem[index].isSelected = false
+  setPathClass('')
+ }
 
 	return (
     <div className="painperdu--modal--body--container">
@@ -16,7 +31,12 @@ export const PainPerduListItem: FC<Props> = ({ pathItem }) => {
         {
           pathItem.map((item, index) => {
             return (
-              <li key={index} className='flex items-center'>
+              <li
+                key={index}
+                className={`flex items-center ${item.isSelected ? pathClass : ''}`}
+                onMouseOver={() => { getSelectedPath(item, index) }}
+                onMouseLeave={() => { cleanSelectedPath(index) }}
+              >
                 <a className="w-full bg-white border-solid shadow-none border-y pl-3 decoration-none">
                   <div className="flex w-full items-center pr-2 h-14 bg-white text-neutral-500">
                     <div className="flex items-center h-14 pr-3">
