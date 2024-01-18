@@ -6,6 +6,8 @@
 	"compilerOptions": {
 	   "outDir": "dist",
 			"noEmit": false,
-			"module": "es2020"
+			"module": "NodeNext",
+			"moduleResolution": "NodeNext",
+			"lib": ["es2022"]
 	}
 }
