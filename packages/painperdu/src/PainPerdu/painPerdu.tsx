@@ -21,6 +21,8 @@ const DefaultResults = () => (
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 	const [isModalActive, setModal] = useState<boolean>(false)
 	const [itemsList, setItemsList] = useState<PathItem[]>([])
+  const [selectedPath, setSelectedPath] = useState<string>('')
+  const [pathClass, setPathClass] = useState<string>('')
 
 	const closeModal = (): void => {
 		setModal(false)
