@@ -1,29 +1,14 @@
-import { useState } from 'react';
 import type { FC } from 'react'
 import type { PathItem } from '../types';
 
 interface Props {
-  pathItem: PathItem[],
+  pathItem: PathItem[]
+  pathClass: string
+  handleSelectedPath: (path: PathItem, index: number, ) => void
+  handleCleanSelectedPath: (index: number, ) => void
 }
 
-export const PainPerduListItem: FC<Props> = ({ pathItem }) => {
-  const [selectedPath, setSelectedPath] = useState<string>('')
-  const [pathClass, setPathClass] = useState<string>('')
-
- const getSelectedPath = (path: PathItem, index: number): void => {
-  setSelectedPath(path.alias)
-
-  if (selectedPath === path.alias) {
-    pathItem[index].isSelected = true
-    setPathClass('bg-yellow-200')
-  }
- }
-
- const cleanSelectedPath = (index: number): void => {
-  pathItem[index].isSelected = false
-  setPathClass('')
- }
-
+export const PainPerduListItem: FC<Props> = ({ pathItem, pathClass, handleSelectedPath, handleCleanSelectedPath }) => {
 	return (
     <div className="painperdu--modal--body--container">
       <ul className="flex-col mb-12 pt-8 pl-4">
@@ -33,8 +18,8 @@ export const PainPerduListItem: FC<Props> = ({ pathItem }) => {
               <li
                 key={index}
                 className={`flex items-center ${item.isSelected ? pathClass : 'bg-white'}`}
-                onMouseOver={() => { getSelectedPath(item, index) }}
-                onMouseLeave={() => { cleanSelectedPath(index) }}
+                onMouseOver={() => { handleSelectedPath(item, index) }}
+                onMouseLeave={() => { handleCleanSelectedPath(index) }}
               >
                 <a className="w-full border-solid shadow-none border-y pl-3 decoration-none">
                   <div className="flex w-full items-center pr-2 h-14 text-neutral-500">
