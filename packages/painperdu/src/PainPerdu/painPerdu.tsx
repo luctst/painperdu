@@ -21,8 +21,6 @@ const DefaultResults = () => (
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 	const [isModalActive, setModal] = useState<boolean>(false)
 	const [itemsList, setItemsList] = useState<PathItem[]>([])
-  const [selectedPath, setSelectedPath] = useState<string>('')
-  const [pathClass, setPathClass] = useState<string>('')
 
 	const closeModal = (): void => {
 		setModal(false)
@@ -54,6 +52,12 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 		setItemsList(pathItems.filter((pathItem: PathItem) => pathItem.alias.includes((event.target as HTMLInputElement).value)))
 	}
 
+	const onItemChanged = (index: number, isActive: boolean): void => {
+		const newItemList = [...itemsList]
+		newItemList[index].isSelected = isActive
+		setItemsList(newItemList)
+	}
+
 	useEffect(() => {
 		window.addEventListener('keydown', handleEsc)
 		return () => {
@@ -82,7 +86,8 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 								<main className="min-h-3 py-0 px-3 overflow-y-auto">
 									<div className="text-sm	my-0 mx-auto py-14 px-0 text-center w-4/5">
 										{
-											itemsList.length ? <PainPerduListItem pathItem={itemsList} /> : <DefaultResults />
+											itemsList.length ? <PainPerduListItem pathItem={itemsList}
+											onItemActiveChanged={onItemChanged} /> : <DefaultResults />
 										}
 									</div>
 								</main>

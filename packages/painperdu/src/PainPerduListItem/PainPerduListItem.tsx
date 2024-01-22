@@ -3,12 +3,10 @@ import type { PathItem } from '../types';
 
 interface Props {
   pathItem: PathItem[]
-  pathClass: string
-  handleSelectedPath: (path: PathItem, index: number, ) => void
-  handleCleanSelectedPath: (index: number, ) => void
+  onItemActiveChanged: (index: number, isActive: boolean) => void
 }
 
-export const PainPerduListItem: FC<Props> = ({ pathItem, pathClass, handleSelectedPath, handleCleanSelectedPath }) => {
+  export const PainPerduListItem: FC<Props> = ({ pathItem, onItemActiveChanged }) => {
 	return (
     <div className="painperdu--modal--body--container">
       <ul className="flex-col mb-12 pt-8 pl-4">
@@ -17,9 +15,9 @@ export const PainPerduListItem: FC<Props> = ({ pathItem, pathClass, handleSelect
             return (
               <li
                 key={index}
-                className={`flex items-center ${item.isSelected ? pathClass : 'bg-white'}`}
-                onMouseOver={() => { handleSelectedPath(item, index) }}
-                onMouseLeave={() => { handleCleanSelectedPath(index) }}
+                className={`flex items-center ${item.isSelected ? 'bg-yellow-200' : 'bg-white'}`}
+                onMouseOver={() => { onItemActiveChanged(index, true) }}
+                onMouseLeave={() => { onItemActiveChanged(index, false) }}
               >
                 <a className="w-full border-solid shadow-none border-y pl-3 decoration-none">
                   <div className="flex w-full items-center pr-2 h-14 text-neutral-500">
