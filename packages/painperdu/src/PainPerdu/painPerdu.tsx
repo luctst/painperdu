@@ -53,8 +53,8 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 	}
 
 	const onItemChanged = (index: number, isActive: boolean): void => {
-		const newItemList = [...itemsList]
-		newItemList[index].isSelected = isActive
+		const newItemList = [...itemsList] as PathItem[]
+		(newItemList[index] as PathItem).isSelected = isActive
 		setItemsList(newItemList)
 	}
 
