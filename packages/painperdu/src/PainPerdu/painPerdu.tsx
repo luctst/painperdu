@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import type { FC } from 'react'
+import type { ChangeEvent, FC } from 'react'
 import { createPortal } from 'react-dom';
 import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
 import type { PathItem } from '../types';
@@ -44,7 +44,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 		setModal(isModal)
 	}
 
-	const displayPathItems = (event: Event): void => {
+	const displayPathItems = (event: ChangeEvent<HTMLInputElement>): void => {
 		if ((event.target as HTMLInputElement).value === '') {
 			setItemsList([])
 			return
