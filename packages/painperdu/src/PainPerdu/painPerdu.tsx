@@ -28,14 +28,6 @@ export const PainPerdu = () => {
 
 	return (
 		<section>
-			<div className='flex flex-col justify-center items-center m-5'>
-				<div className='p-6 text-5xl font-bold '>
-					<h1>Welcome on Pain Perdu</h1>
-				</div>
-				<div className='flex items-center justify-center'>
-					Press <kbd className='p-3 ml-1 mr-1'>CMD</kbd>+<kbd className='p-3 ml-1 mr-1'>K</kbd>for open modal and load new route
-				</div>
-			</div>
 			{
 				<PainPerduModal
 					isContainerBc={isContainerBc}
