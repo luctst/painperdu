@@ -18,7 +18,7 @@ export const PainPerduModal: FC<Props> = ({ showModal, isContainerBc, handleShow
             }
             onClick={() => { handleShowModal(false) }}
           ></div>
-            <div className="flex justify-center items-center my-0 mx-auto overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-8/12">
+            <div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-8/12">
               <div className="border-0 rounded-xl shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-full">
               <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div>
