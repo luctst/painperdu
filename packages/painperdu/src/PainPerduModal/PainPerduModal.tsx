@@ -20,10 +20,10 @@ export const PainPerduModal: FC<Props> = ({ showModal, isContainerBc, handleShow
           ></div>
             <div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-8/12">
               <div className="border-0 rounded-xl shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-full">
-              <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div className="bg-white px-0 pt-1">
                   <div>
                     <div>
-                      <header>
+                      <header className='pt-3 px-3 pb-0'>
                         <form className="flex items-center bg-white relative rounded-md m-0 py-0 px-3 h-14 w-full ">
                           <label className="flex items-center justify-center m-0 p-0 text-yellow-200" id="form--label" htmlFor="painperdu-input">
                             <svg width="20" height="20" viewBox="0 0 20 20"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"></path></svg>
@@ -32,7 +32,7 @@ export const PainPerduModal: FC<Props> = ({ showModal, isContainerBc, handleShow
                         </form>
                       </header>
                       <main className="min-h-3 py-0 px-3 overflow-y-auto">
-                        <div className="text-sm	my-0 mx-auto py-9 px-0 text-center w-4/5">
+                        <div className="text-sm	my-0 mx-auto py-14 px-0 text-center w-4/5">
                           <p className="text-slate-500">Start writing to search routes</p>
                         </div>
                         <div>
