@@ -4,17 +4,14 @@ import '../index.css'
 
 export const PainPerdu = () => {
   const [isModal, setModal] = useState<boolean>(false)
-	const [isContainerBc, setIsContainerBc] = useState<boolean>(false)
 
 	const handleEsc = (event: KeyboardEvent): void => {
 		const isMetaKey: boolean = event.metaKey
 		if (isMetaKey && event.code === 'KeyK') {
 			setModal(true)
-			setIsContainerBc(true)
 		}
 		if (isModal && event.code === 'Escape') {
 			setModal(false)
-			setIsContainerBc(false)
 		}
 	};
 
@@ -30,7 +27,6 @@ export const PainPerdu = () => {
 		<section>
 			{
 				<PainPerduModal
-					isContainerBc={isContainerBc}
 					showModal={isModal}
 					handleShowModal={displayedModal}
 				/>

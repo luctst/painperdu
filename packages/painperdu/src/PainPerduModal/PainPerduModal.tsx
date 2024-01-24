@@ -2,11 +2,10 @@ import type { FC } from 'react'
 
 interface Props {
   showModal: boolean
-  isContainerBc: boolean
   handleShowModal: (isShowModal: boolean) => void
 }
 
-export const PainPerduModal: FC<Props> = ({ showModal, isContainerBc, handleShowModal }) => {
+  export const PainPerduModal: FC<Props> = ({ showModal, handleShowModal }) => {
   return (
     <>
       { showModal ? (
@@ -14,7 +13,7 @@ export const PainPerduModal: FC<Props> = ({ showModal, isContainerBc, handleShow
           <div
             className={`
               flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50
-              outline-none focus:outline-none ${isContainerBc ? 'bg-slate-500 opacity-80' : ''}`
+              outline-none focus:outline-none ${showModal ? 'bg-slate-500 opacity-80' : ''}`
             }
             onClick={() => { handleShowModal(false) }}
           ></div>
