@@ -3,7 +3,7 @@ import { PainPerduModal }  from '../PainPerduModal/PainPerduModal'
 import '../index.css'
 
 export const PainPerdu = () => {
-  const [isModal, setModal] = useState<boolean>(false)
+  const [isModalActive, setModal] = useState<boolean>(false)
 
 	const handleEsc = (event: KeyboardEvent): void => {
 		const keyPressed = event.code
@@ -13,9 +13,9 @@ export const PainPerdu = () => {
 			closeModal: 'Escape',
 		}
 
-		if (((keyPressed !== commands.openModal) && isMetaKey) || ((keyPressed !== commands.closeModal) && isModal)) return
+		if (((keyPressed !== commands.openModal) && isMetaKey) || ((keyPressed !== commands.closeModal) && isModalActive)) return
 		if ((keyPressed === commands.openModal) && isMetaKey) setModal(true)
-		if ((keyPressed === commands.closeModal) && isModal) setModal(false)
+		if ((keyPressed === commands.closeModal) && isModalActive) setModal(false)
 	};
 
 	const displayedModal = (isModal: boolean): void => {
@@ -30,7 +30,7 @@ export const PainPerdu = () => {
 		<section>
 			{
 				<PainPerduModal
-					showModal={isModal}
+					showModal={isModalActive}
 					handleShowModal={displayedModal}
 				/>
 			}
