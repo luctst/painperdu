@@ -6,13 +6,16 @@ export const PainPerdu = () => {
   const [isModal, setModal] = useState<boolean>(false)
 
 	const handleEsc = (event: KeyboardEvent): void => {
+		const keyPressed = event.code
 		const isMetaKey: boolean = event.metaKey
-		if (isMetaKey && event.code === 'KeyK') {
-			setModal(true)
+		const commands = {
+			openModal: 'KeyK',
+			closeModal: 'Escape',
 		}
-		if (isModal && event.code === 'Escape') {
-			setModal(false)
-		}
+
+		if (((keyPressed !== commands.openModal) && isMetaKey) || ((keyPressed !== commands.closeModal) && isModal)) return
+		if ((keyPressed === commands.openModal) && isMetaKey) setModal(true)
+		if ((keyPressed === commands.closeModal) && isModal) setModal(false)
 	};
 
 	const displayedModal = (isModal: boolean): void => {
