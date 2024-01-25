@@ -12,5 +12,6 @@ export default {
     args: {
       primary: true,
       label: 'Button',
+      teleport: "#popper-root"
     },
   };
