@@ -23,7 +23,8 @@ export const PainPerdu = () => {
 	}
 
  useEffect(() => {
-	window.addEventListener('keydown', handleEsc);
+	window.addEventListener('keydown', handleEsc)
+	window.removeEventListener('keydown', handleEsc)
  })
 
 	return (
