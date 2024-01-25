@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import type { FC } from 'react'
 import type { PathItem } from '../types';
 
