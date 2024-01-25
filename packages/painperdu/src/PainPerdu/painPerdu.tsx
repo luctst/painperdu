@@ -18,7 +18,7 @@ export const PainPerdu = () => {
 		if ((keyPressed === commands.closeModal) && isModalActive) setModal(false)
 	};
 
-	const displayedModal = (isModal: boolean): void => {
+	const shouldActiveModal = (isModal: boolean): void => {
 		setModal(isModal)
 	}
 
@@ -31,7 +31,7 @@ export const PainPerdu = () => {
 			{
 				<PainPerduModal
 					showModal={isModalActive}
-					handleShowModal={displayedModal}
+					handleShowModal={shouldActiveModal}
 				/>
 			}
 		</section>
