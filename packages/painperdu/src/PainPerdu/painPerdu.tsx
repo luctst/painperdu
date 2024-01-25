@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ChangeEvent, FC } from 'react'
 import { createPortal } from 'react-dom';
 import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const DefaultResults = () => (
-	<div className="painperdu--modal--body--nosearch is--block">
+	<div className="pain-perdu-default-results flex-col mb-12 pt-8 pl-4 text-center">
 		<p>Start writing to search routes</p>
 	</div>
 )
@@ -21,11 +21,6 @@ const DefaultResults = () => (
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 	const [isModalActive, setModal] = useState<boolean>(false)
 	const [itemsList, setItemsList] = useState<PathItem[]>([])
-
-	const closeModal = (): void => {
-		setModal(false)
-		setItemsList([])
-	}
 
 	const handleEsc = (event: KeyboardEvent): void => {
 		const keyPressed = event.code
@@ -77,17 +72,21 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 				}
 				onClick={() => { shouldActiveModal(false) }}
 			></div>
-			<div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-8/12">
+			<div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-7/12">
 				<div className="border-0 rounded-xl shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-full">
 					<div className="bg-white px-0 pt-1">
 						<div>
 							<div>
-								<PainPerduSearchBar />
+								<PainPerduSearchBar displayPathItems={displayPathItems} />
 								<main className="min-h-3 py-0 px-3 overflow-y-auto">
-									<div className="text-sm	my-0 mx-auto py-14 px-0 text-center w-4/5">
+									<div className="text-sm	my-0 mx-auto">
 										{
-											itemsList.length ? <PainPerduListItem pathItem={itemsList}
-											onItemActiveChanged={onItemChanged} /> : <DefaultResults />
+											itemsList.length > 0 ?
+												<PainPerduListItem
+													pathItem={itemsList}
+													onItemActiveChanged={onItemChanged}
+												/> :
+												<DefaultResults />
 										}
 									</div>
 								</main>
