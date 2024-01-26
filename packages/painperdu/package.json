@@ -29,6 +29,7 @@
     "ts-config-painperdu": "workspace:^"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@types/node": "^20.10.1",
     "@types/react": "^18.2.39",
     "@types/react-dom": "^18.2.17",

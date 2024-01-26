@@ -1,16 +1,26 @@
-import { useEffect, useState } from 'react'
-import type { FC } from 'react'
+import { useEffect, useState } from 'react';
+import type { ChangeEvent, FC } from 'react'
 import { createPortal } from 'react-dom';
+import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
+import type { PathItem } from '../types';
 import { PainPerduSearchBar } from '../components/PainPerduSearchBar'
 import { PainPerduFooter } from '../components/PainPerduFooter'
 import '../index.css'
 
 interface Props {
+  pathItems: PathItem[]
   teleport: string
 }
 
-export const PainPerdu: FC<Props> = ({ teleport }) => {
-  const [isModalActive, setModal] = useState<boolean>(false)
+const DefaultResults = () => (
+	<div className="pain-perdu-default-results flex-col mb-12 pt-8 pl-4 text-center">
+		<p>Start writing to search routes</p>
+	</div>
+)
+
+export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
+	const [isModalActive, setModal] = useState<boolean>(false)
+	const [itemsList, setItemsList] = useState<PathItem[]>([])
 
 	const handleEsc = (event: KeyboardEvent): void => {
 		const keyPressed = event.code
@@ -29,12 +39,27 @@ export const PainPerdu: FC<Props> = ({ teleport }) => {
 		setModal(isModal)
 	}
 
+	const displayPathItems = (event: ChangeEvent<HTMLInputElement>): void => {
+		if ((event.target as HTMLInputElement).value === '') {
+			setItemsList([])
+			return
+		}
+		setItemsList(pathItems.filter((pathItem: PathItem) => pathItem.alias.includes((event.target as HTMLInputElement).value)))
+	}
+
+	const onItemChanged = (index: number, isActive: boolean): void => {
+		const newItemList = [...itemsList] as PathItem[]
+		(newItemList[index] as PathItem).isSelected = isActive
+		setItemsList(newItemList)
+	}
+
 	useEffect(() => {
 		window.addEventListener('keydown', handleEsc)
 		return () => {
 			window.removeEventListener('keydown', handleEsc)
 		}
 	})
+
 
  if (!isModalActive) return (null)
 
@@ -47,18 +72,22 @@ export const PainPerdu: FC<Props> = ({ teleport }) => {
 				}
 				onClick={() => { shouldActiveModal(false) }}
 			></div>
-			<div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-8/12">
+			<div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-7/12">
 				<div className="border-0 rounded-xl shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-full">
 					<div className="bg-white px-0 pt-1">
 						<div>
 							<div>
-								<PainPerduSearchBar />
+								<PainPerduSearchBar displayPathItems={displayPathItems} />
 								<main className="min-h-3 py-0 px-3 overflow-y-auto">
-									<div className="text-sm	my-0 mx-auto py-14 px-0 text-center w-4/5">
-										<p className="text-slate-500">Start writing to search routes</p>
-									</div>
-									<div>
-										<ul className="flex list-none	m-0 p-0"></ul>
+									<div className="text-sm	my-0 mx-auto">
+										{
+											itemsList.length > 0 ?
+												<PainPerduListItem
+													pathItem={itemsList}
+													onItemActiveChanged={onItemChanged}
+												/> :
+												<DefaultResults />
+										}
 									</div>
 								</main>
 								<PainPerduFooter />
