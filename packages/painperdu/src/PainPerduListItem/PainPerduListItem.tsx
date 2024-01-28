@@ -4,10 +4,10 @@ import type { PathItem } from '../types';
 
 interface Props {
   pathItem: PathItem[]
-  onItemActiveChanged: (index: number, isActive: boolean) => void
+  cursorUpdated: (index: number, isSelectedItem: boolean) => void
 }
 
-  export const PainPerduListItem: FC<Props> = ({ pathItem, onItemActiveChanged }) => {
+  export const PainPerduListItem: FC<Props> = ({ pathItem, cursorUpdated }) => {
 	return (
     <div className="painperdu--modal--body--container">
       <ul className="flex-col mb-12 pt-8 pl-4">
@@ -17,8 +17,8 @@ interface Props {
               <li
                 key={index}
                 className={`flex items-center ${item.isSelected ? 'bg-yellow-200' : 'bg-white'}`}
-                onMouseOver={() => { onItemActiveChanged(index, true) }}
-                onMouseLeave={() => { onItemActiveChanged(index, false) }}
+                onMouseOver={() => { cursorUpdated(index, true) }}
+                onMouseLeave={() => { cursorUpdated(index, false) }}
               >
                 <a className="w-full border-solid shadow-none border-y pl-3 decoration-none">
                   <div className="flex w-full items-center pr-2 h-14 text-neutral-500">
