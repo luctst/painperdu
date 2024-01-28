@@ -2,8 +2,9 @@
   "private": true,
   "name": "painperdu",
   "scripts": {
-    "dev": "pnpm run --filter './packages/*' --if-present -r dev",
-    "lint": "pnpm run --filter './packages/*' --if-present -r lint",
+    "dev": "pnpm run --filter './packages/*' --if-present --parrallel --stream dev",
+    "dev:storybook": "pnpm run --filter painperdu --if-present --stream dev",
+    "lint": "pnpm run --filter './packages/*' --if-present --parallel --stream lint",
     "typecheck": "pnpm run --filter './packages/*' --if-present -r typecheck"
   },
   "engines": {
