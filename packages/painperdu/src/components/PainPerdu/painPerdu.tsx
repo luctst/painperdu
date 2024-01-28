@@ -43,7 +43,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 			setItemsList([])
 			return
 		}
-		setItemsList(pathItems.filter((pathItem: PathItem) => pathItem.alias.includes(value)))
+
 	}
 
 	const commandsManager = (event: KeyboardEvent): void => {
