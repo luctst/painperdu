@@ -4,12 +4,16 @@ import type { PathItem } from '../../types';
 
 interface Props {
   route: PathItem
+  itemIndex: number
+  cursorUpdated: (itemIndex: number, isSelectedItem: boolean) => void
 }
 
-  export const PainPerduListItem: FC<Props> = ({ route }) => {
+  export const PainPerduListItem: FC<Props> = ({ route, itemIndex, cursorUpdated }) => {
 	return (
 	<li
       className={`flex items-center ${route.isSelected ? 'bg-yellow-200' : 'bg-white'}`}
+      onMouseOver={() => { cursorUpdated(itemIndex, true) }}
+      onMouseLeave={() => { cursorUpdated(itemIndex, false) }}
     >
       <a className="w-full border-solid shadow-none border-y pl-3 decoration-none">
         <div className="flex w-full items-center pr-2 h-14 text-neutral-500">
