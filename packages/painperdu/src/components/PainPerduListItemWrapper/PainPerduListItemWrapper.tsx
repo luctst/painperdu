@@ -34,6 +34,14 @@ export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items,
     setCursor(cursor + 1);
   }
 
+  const cursorUpdated = (itemIndex: number, isSelectedItem: boolean): void => {
+    const newItemList = [...routes] as PathItem[]
+      newItemList.map((route: PathItem, index: number): void => {
+      if (index === itemIndex) route.isSelected = isSelectedItem
+    })
+    setRoutes(newItemList)
+	}
+
   useEffect(() => {
     if (cursor < 0) return;
 
@@ -62,7 +70,7 @@ export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items,
     commands[eventDispatched].call();
   }, [eventDispatched])
 
-  useEffect(() => setRoutes([ ...items ]), [items]);
+  useEffect(() => { setRoutes([ ...items ]); }, [items]);
 
   if (items.length <= 0) return <DefaultResults />
 
@@ -72,7 +80,14 @@ export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items,
   		 <div className="painperdu--modal--body--container">
         <ul className="flex-col mb-12 pt-8 pl-4">
           {
-            routes.map((route, index) => <PainPerduListItem key={index} route={route}/>)
+            routes.map((route, index) =>
+              <PainPerduListItem
+                key={index}
+                route={route}
+                itemIndex={index}
+                cursorUpdated={cursorUpdated}
+              />
+            )
           }
         </ul>
        </div>
