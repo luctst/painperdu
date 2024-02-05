@@ -67,7 +67,6 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
     setCursorOldState(cursor)
     setCursor(itemIndex)
 	}
-
   useEffect(() => {
     if (cursor < 0) return
     if (cursor === routes.length) return
