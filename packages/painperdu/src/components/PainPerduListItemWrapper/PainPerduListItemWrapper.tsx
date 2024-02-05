@@ -34,20 +34,16 @@ export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items,
     setCursor(cursor + 1);
   }
 
-  const cursorUpdated = (itemIndex: number, isSelectedItem: boolean): void => {
-    const newItemList = [...routes] as PathItem[]
-      newItemList.map((route: PathItem, index: number): void => {
-      if (index === itemIndex) route.isSelected = isSelectedItem
-    })
-    setRoutes(newItemList)
+  const cursorUpdated = (itemIndex: number): void => {
+    setCursorOldState(cursor)
+    setCursor(itemIndex)
 	}
-
   useEffect(() => {
     if (cursor < 0) return;
 
     const newRoutes = [ ...routes ];
 
-    if (cursorOldState > 0) {
+    if (cursorOldState >= 0) {
       newRoutes[cursorOldState].isSelected = false;
     }
     newRoutes[cursor].isSelected = true;
