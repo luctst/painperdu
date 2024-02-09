@@ -1,12 +1,12 @@
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { createRef, useEffect, useRef ,useState } from 'react';
 import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem';
 import type { CommandHandler, PathItem } from '../../types';
 import { useCommandManager } from '../../hooks/use-command-manager';
 
 interface PainPerduListItemWrapperProps {
   items: PathItem[],
-  eventDispatched: string | null
+  eventDispatched: { eventType: string } | null
 }
 
 const DefaultResults = (): JSX.Element => (
@@ -16,30 +16,65 @@ const DefaultResults = (): JSX.Element => (
 )
 
 export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventDispatched }): JSX.Element => {
+  const mainRef = useRef<HTMLElement | null>(null)
+  const itemRef = createRef<HTMLAnchorElement>()
   const [cursor, setCursor] = useState<number>(-1);
   const [cursorOldState, setCursorOldState] = useState<number>(-1);
   const [routes, setRoutes] = useState<PathItem[]>([]);
 
-  const onArrowUp = (): void => {
-    if (cursor <= 0) return;
+  const handleScrollBar = (arrowPosition: string): void => {
+    const containerScrollable = mainRef.current
+    if (containerScrollable === null) return
 
-    setCursorOldState(cursor);
-    setCursor(cursor - 1);
+    const itemSelected = itemRef.current?.parentElement
+    const containerScrollableScrollPx =
+    containerScrollable.clientHeight + containerScrollable.scrollTop
+
+    if (arrowPosition === "down") {
+      if (itemSelected?.offsetTop >= containerScrollableScrollPx) {
+        containerScrollable?.scroll({
+          top: containerScrollable.scrollTop + itemSelected?.clientHeight
+        })
+      }
+    }
+
+    if (arrowPosition === "up") {
+      containerScrollable?.scroll({
+        top: containerScrollable.scrollTop - itemSelected?.clientHeight
+      })
+    }
+  }
+
+  const onArrowUp = (): void => {
+    // ajouter scroll quand on est en haut de la liste => bug itemSelected
+
+    if (cursor <= 0) return
+
+    console.log('ON ARROW UP')
+    setCursorOldState(cursor)
+    setCursor(cursor - 1)
+    handleScrollBar('up')
   }
 
   const onArrowDown = (): void => {
-    if (cursor === routes.length) return;
+    // gérer erreur isSelected quand on est à la fin
+    // ajouter scroll quand on est à la fin de la liste => bug itemSelected
+
+    if (cursor === routes.length) return
 
     setCursorOldState(cursor);
     setCursor(cursor + 1);
+    handleScrollBar('down')
   }
 
   const cursorUpdated = (itemIndex: number): void => {
     setCursorOldState(cursor)
     setCursor(itemIndex)
 	}
+
   useEffect(() => {
     if (cursor < 0) return;
+    if (cursor === routes.length) return
 
     const newRoutes = [ ...routes ];
 
@@ -60,10 +95,10 @@ export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items,
       ArrowUp: onArrowUp,
     };
 
-    const { shouldCallFn } = useCommandManager(eventDispatched, commands);
+    const { shouldCallFn } = useCommandManager(eventDispatched.eventType, commands);
 
     if (!shouldCallFn) return;
-    commands[eventDispatched].call();
+    (commands as any)[eventDispatched.eventType].call()
   }, [eventDispatched])
 
   useEffect(() => { setRoutes([ ...items ]); }, [items]);
@@ -71,23 +106,24 @@ export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items,
   if (items.length <= 0) return <DefaultResults />
 
   return (
-    <main className="min-h-3 py-0 px-3 overflow-y-auto">
-			<div className="text-sm	my-0 mx-auto">
-  		 <div className="painperdu--modal--body--container">
-        <ul className="flex-col mb-12 pt-8 pl-4">
+    <main ref={mainRef} className="min-h-3 py-0 px-3 mb-3 overflow-y-auto">
+			{/* <div className="text-sm	my-0 mx-auto h-3/5"> */}
+  		 <div className="text-sm	my-0 mx-auto h-3/5">
+        <ul className="flex-col mb-12 pt-8 pl-4 overflow-y-auto">
           {
             routes.map((route, index) =>
               <PainPerduListItem
                 key={index}
                 route={route}
                 itemIndex={index}
+                itemRef={itemRef}
                 cursorUpdated={cursorUpdated}
               />
             )
           }
         </ul>
        </div>
-			</div>
+			{/* </div> */}
 		</main>
   );
 }
