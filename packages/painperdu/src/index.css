@@ -30,3 +30,8 @@ span {
 .pain-perdu-default-results, .painperdu--modal--footer--thanks p {
   color: #6c757d;
 }
+
+main {
+  height: 60vh;
+  max-height: 488px;
+}
