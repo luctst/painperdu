@@ -49,7 +49,6 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
 
   const onArrowUp = (): void => {
     if (cursor <= 0) return
-
     setCursorOldState(cursor)
     setCursor(cursor - 1)
     handleScrollBar('up')
@@ -67,6 +66,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
     setCursorOldState(cursor)
     setCursor(itemIndex)
 	}
+
   useEffect(() => {
     if (cursor < 0) return
     if (cursor === routes.length) return
@@ -130,7 +130,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
           }
         </ul>
        </div>
-			</div>
+			{/* </div> */}
 		</main>
   )
 }
