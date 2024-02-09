@@ -1,8 +1,8 @@
-import type { FC } from 'react';
-import { createRef, useEffect, useRef ,useState } from 'react';
-import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem';
-import type { CommandHandler, PathItem } from '../../types';
-import { useCommandManager } from '../../hooks/use-command-manager';
+import type { FC } from 'react'
+import { createRef, useEffect, useRef ,useState } from 'react'
+import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
+import type { CommandHandler, PathItem } from '../../types'
+import { useCommandManager } from '../../hooks/use-command-manager'
 
 interface PainPerduListItemWrapperProps {
   items: PathItem[],
@@ -18,9 +18,9 @@ const DefaultResults = (): JSX.Element => (
 export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventDispatched }): JSX.Element => {
   const mainRef = useRef<HTMLElement | null>(null)
   const itemRef = createRef<HTMLAnchorElement>()
-  const [cursor, setCursor] = useState<number>(-1);
-  const [cursorOldState, setCursorOldState] = useState<number>(-1);
-  const [routes, setRoutes] = useState<PathItem[]>([]);
+  const [cursor, setCursor] = useState<number>(-1)
+  const [cursorOldState, setCursorOldState] = useState<number>(-1)
+  const [routes, setRoutes] = useState<PathItem[]>([])
 
   const handleScrollBar = (arrowPosition: string): void => {
     const containerScrollable = mainRef.current
@@ -31,39 +31,33 @@ export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items,
     containerScrollable.clientHeight + containerScrollable.scrollTop
 
     if (arrowPosition === "down") {
-      if (itemSelected?.offsetTop >= containerScrollableScrollPx) {
+      if ((itemSelected as HTMLElement)?.offsetTop >= containerScrollableScrollPx) {
         containerScrollable?.scroll({
-          top: containerScrollable.scrollTop + itemSelected?.clientHeight
+          top: containerScrollable.scrollTop + ((itemSelected as HTMLElement)?.clientHeight - 10),
+          behavior: 'smooth'
         })
       }
     }
 
     if (arrowPosition === "up") {
       containerScrollable?.scroll({
-        top: containerScrollable.scrollTop - itemSelected?.clientHeight
+        top: containerScrollable.scrollTop - ((itemSelected as HTMLElement)?.clientHeight - 10),
+        behavior: 'smooth'
       })
     }
   }
 
   const onArrowUp = (): void => {
-    // ajouter scroll quand on est en haut de la liste => bug itemSelected
-
     if (cursor <= 0) return
-
-    console.log('ON ARROW UP')
     setCursorOldState(cursor)
     setCursor(cursor - 1)
     handleScrollBar('up')
   }
 
   const onArrowDown = (): void => {
-    // gérer erreur isSelected quand on est à la fin
-    // ajouter scroll quand on est à la fin de la liste => bug itemSelected
-
     if (cursor === routes.length) return
-
-    setCursorOldState(cursor);
-    setCursor(cursor + 1);
+    setCursorOldState(cursor)
+    setCursor(cursor + 1)
     handleScrollBar('down')
   }
 
@@ -73,57 +67,56 @@ export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items,
 	}
 
   useEffect(() => {
-    if (cursor < 0) return;
+    if (cursor < 0) return
     if (cursor === routes.length) return
 
-    const newRoutes = [ ...routes ];
+    const newRoutes = [ ...routes ]
 
     if (cursorOldState >= 0) {
-      newRoutes[cursorOldState].isSelected = false;
+      if (newRoutes[cursorOldState] === undefined) return
+      (newRoutes as any)[cursorOldState].isSelected = false
     }
-    newRoutes[cursor].isSelected = true;
+    (newRoutes as any)[cursor].isSelected = true
 
-    setRoutes(newRoutes);
+    setRoutes(newRoutes)
 	}, [cursor])
 
   useEffect(() => {
-    if (routes.length <= 0) return;
-    if (eventDispatched === null) return;
+    if (routes.length <= 0) return
+    if (eventDispatched === null) return
 
     const commands: CommandHandler = {
       ArrowDown: onArrowDown,
       ArrowUp: onArrowUp,
-    };
+    }
 
-    const { shouldCallFn } = useCommandManager(eventDispatched.eventType, commands);
+    const { shouldCallFn } = useCommandManager(eventDispatched.eventType, commands)
 
-    if (!shouldCallFn) return;
+    if (!shouldCallFn) return
     (commands as any)[eventDispatched.eventType].call()
   }, [eventDispatched])
 
-  useEffect(() => { setRoutes([ ...items ]); }, [items]);
+  useEffect(() => { setRoutes([ ...items ]) }, [items])
 
   if (items.length <= 0) return <DefaultResults />
 
   return (
     <main ref={mainRef} className="min-h-3 py-0 px-3 mb-3 overflow-y-auto">
-			{/* <div className="text-sm	my-0 mx-auto h-3/5"> */}
-  		 <div className="text-sm	my-0 mx-auto h-3/5">
-        <ul className="flex-col mb-12 pt-8 pl-4 overflow-y-auto">
-          {
-            routes.map((route, index) =>
-              <PainPerduListItem
-                key={index}
-                route={route}
-                itemIndex={index}
-                itemRef={itemRef}
-                cursorUpdated={cursorUpdated}
-              />
-            )
-          }
-        </ul>
-       </div>
-			{/* </div> */}
+      <div className="text-sm	my-0 mx-auto h-3/5">
+      <ul className="flex-col mb-12 pt-8 pl-4 overflow-y-auto">
+        {
+          routes.map((route, index) =>
+            <PainPerduListItem
+              key={index}
+              route={route}
+              itemIndex={index}
+              itemRef={itemRef}
+              cursorUpdated={cursorUpdated}
+            />
+          )
+        }
+      </ul>
+      </div>
 		</main>
   );
 }
