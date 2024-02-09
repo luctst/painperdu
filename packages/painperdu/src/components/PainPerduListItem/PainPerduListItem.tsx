@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import type { FC } from 'react'
+import type { FC, LegacyRef } from 'react'
 import type { PathItem } from '../../types';
 
 interface Props {
   route: PathItem
   itemIndex: number
+  itemRef: LegacyRef<HTMLAnchorElement> | null
   cursorUpdated: (itemIndex: number) => void
 }
 
-  export const PainPerduListItem: FC<Props> = ({ route, itemIndex, cursorUpdated }) => {
+  export const PainPerduListItem: FC<Props> = ({ route, itemIndex, itemRef, cursorUpdated }) => {
 	return (
 	<li
       className={`flex items-center ${route.isSelected ? 'bg-yellow-200' : 'bg-white'}`}
       onMouseOver={() => { cursorUpdated(itemIndex) }}
       onMouseLeave={() => { cursorUpdated(itemIndex) }}
     >
-      <a className="w-full border-solid shadow-none border-y pl-3 decoration-none">
+      <a ref={itemRef} className="w-full border-solid shadow-none border-y pl-3 decoration-none">
         <div className="flex w-full items-center pr-2 h-14 text-neutral-500">
           <div className="flex items-center h-14 pr-3">
             <svg width="20" height="20" viewBox="0 0 20 20"><path d="M17 6v12c0 .52-.2 1-1 1H4c-.7 0-1-.33-1-1V2c0-.55.42-1 1-1h8l5 5zM14 8h-3.13c-.51 0-.87-.34-.87-.87V4" stroke="currentColor" fill="none" fillRule="evenodd" strokeLinejoin="round"></path></svg>
