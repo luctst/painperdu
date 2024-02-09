@@ -94,6 +94,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
     const { shouldCallFn } = useCommandManager(eventDispatched.eventType, commands)
 
     if (!shouldCallFn) return
+
     if (commands) {
 		  if (commands[eventDispatched.eventType]) {
 		  if (typeof commands[eventDispatched.eventType] === 'function') {
