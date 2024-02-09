@@ -16,6 +16,116 @@ export default {
         isSelected: false,
       },
       {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
+        alias: 'hm',
+        path: '/home',
+        isSelected: false,
+      },
+      {
         alias: 'hq',
         path: '/qg',
         isSelected: false,
