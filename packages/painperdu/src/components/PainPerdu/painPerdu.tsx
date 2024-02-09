@@ -8,6 +8,11 @@ import '../../index'
 import { PainPerduItemWrapper } from '../PainPerduListItemWrapper/PainPerduListItemWrapper';
 import { useCommandManager } from '../../hooks/use-command-manager';
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+type EventDispatched = {
+	eventType: string
+}
+
 interface Props {
   pathItems: PathItem[]
   teleport: string
@@ -16,7 +21,7 @@ interface Props {
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 	const [isModalActive, setModal] = useState<boolean>(false)
 	const [itemsList, setItemsList] = useState<PathItem[]>([])
-	const [eventToDispatch, setEventToDispatch] = useState<null | string>(null);
+	const [eventToDispatch, setEventToDispatch] = useState<EventDispatched | null>(null)
 
 	const openModal = (isMetaKey: boolean): void => {
 		if (isModalActive || !isMetaKey) return
@@ -49,11 +54,13 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 	   const { shouldCallFn } = useCommandManager(event.code, commands);
 
 		if (!shouldCallFn) {
-		  setEventToDispatch(event.code);
+		  setEventToDispatch({
+				eventType: event.code
+			})
 			return;
 		};
 
-		commands[event.code].call(null);
+		(commands as any)[event.code].call(null);
 	};
 
 	useEffect(() => {
@@ -74,7 +81,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 				}
 				onClick={() => { shouldActiveModal(false) }}
 			></div>
-			<div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-7/12">
+			<div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none h-1/2 w-7/12">
 				<div className="border-0 rounded-xl shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-full">
 					<div className="bg-white px-0 pt-1">
 						<div>
