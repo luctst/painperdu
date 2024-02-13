@@ -1,14 +1,21 @@
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react'
 import type { ChangeEvent, FC } from 'react'
-import { createPortal } from 'react-dom';
-import type { CommandHandler, PathItem } from '@/types';
-import { PainPerduSearchBar } from '../PainPerduSearchBar/PainPerduSearchBar';
-import { PainPerduFooter } from '../PainPerduFooter/PainPerduFooter';
+import { createPortal } from 'react-dom'
+import type { CommandHandler, PathItem } from '@/types'
 import '../../index'
-import { PainPerduItemWrapper } from '../PainPerduListItemWrapper/PainPerduListItemWrapper';
-import { useCommandManager } from '../../hooks/use-command-manager';
+import { useCommandManager } from '../../hooks/use-command-manager'
+import { PainPerduSkeleton } from '../PainPerduSkeleton/PainPerduSkeleton'
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+function delayForDemo(promise: any) {
+  return new Promise(resolve => {
+  	setTimeout(resolve, 2000)
+  }).then(() => promise)
+}
+
+const PainPerduSearchBar = lazy(() => delayForDemo(import('../PainPerduSearchBar/PainPerduSearchBar')))
+const PainPerduListItemWrapper = lazy(() => delayForDemo(import('../PainPerduListItemWrapper/PainPerduListItemWrapper')))
+const PainPerduFooter = lazy(() => delayForDemo(import('../PainPerduFooter/PainPerduFooter')))
+
 type EventDispatched = {
 	eventType: string
 }
@@ -73,28 +80,30 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
  if (!isModalActive) return (null)
 
  return createPortal(
-		<>
-			<div
-				className={`
-					flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50
-					outline-none focus:outline-none ${isModalActive ? 'bg-slate-500 opacity-80' : ''}`
-				}
-				onClick={() => { shouldActiveModal(false) }}
-			></div>
-			<div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none h-1/2 w-7/12">
-				<div className="border-0 rounded-xl shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-full">
-					<div className="bg-white px-0 pt-1">
+	<>
+		<div
+			className={`
+				flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50
+				outline-none focus:outline-none ${isModalActive ? 'bg-slate-500 opacity-80' : ''}`
+			}
+			onClick={() => { shouldActiveModal(false) }}
+		></div>
+		<div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-7/12">
+			<div className="m-w-[560px] border-0 rounded-xl shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-full">
+				<div className="bg-white px-0 pt-1">
+					<div>
 						<div>
-							<div>
+							<Suspense fallback={<PainPerduSkeleton />}>
 								<PainPerduSearchBar displayPathItems={displayPathItems} />
-								<PainPerduItemWrapper items={itemsList} eventDispatched={eventToDispatch}/>
+								<PainPerduListItemWrapper items={itemsList} eventDispatched={eventToDispatch}/>
 								<PainPerduFooter />
-							</div>
+							</Suspense>
 						</div>
 					</div>
 				</div>
 			</div>
-		</>,
-		document.querySelector(teleport) as HTMLElement
+		</div>
+	</>,
+	document.querySelector(teleport) as HTMLElement
  )
-};
+}
