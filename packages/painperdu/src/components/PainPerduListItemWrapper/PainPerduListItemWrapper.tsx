@@ -49,6 +49,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
 
   const onArrowUp = (): void => {
     if (cursor <= 0) return
+
     setCursorOldState(cursor)
     setCursor(cursor - 1)
     handleScrollBar('up')
