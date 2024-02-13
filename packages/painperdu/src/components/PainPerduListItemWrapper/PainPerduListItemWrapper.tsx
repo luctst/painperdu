@@ -20,7 +20,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
   const [cursorOldState, setCursorOldState] = useState<number>(-1)
   const [routes, setRoutes] = useState<PathItem[]>([])
   const mainRef = useRef<HTMLElement>(null)
-  const itemsRef = useRef(null)
+  const itemsRef:any = useRef<HTMLElement | null>(null)
 
   itemsRef.current = new Map()
 

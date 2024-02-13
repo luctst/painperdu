@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const PainPerduListItem: FC<Props> = forwardRef((props, ref) => {
-  const liRef = useRef(null)
+  const liRef = useRef<HTMLLIElement | null>(null)
 
   useImperativeHandle(ref, () => {
     return {
