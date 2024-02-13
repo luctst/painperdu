@@ -1,4 +1,6 @@
-export const PainPerduFooter = (): JSX.Element => {
+import { memo } from 'react'
+
+const PainPerduFooter = memo(function PainPerduFooter(): JSX.Element {
   return (
     <footer className="flex items-center bg-white rounded-md box-border h-11 justify-between	py-0 px-3 relative w-full z-30">
       <ul className="flex list-none	m-0 p-0">
@@ -29,4 +31,6 @@ export const PainPerduFooter = (): JSX.Element => {
       </div>
     </footer>
   )
- };
+})
+
+export default PainPerduFooter

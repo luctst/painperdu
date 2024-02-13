@@ -4,7 +4,7 @@ interface Props {
   displayPathItems: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const PainPerduSearchBar: FC<Props> = ({ displayPathItems }) => {
+const PainPerduSearchBar: FC<Props> = ({ displayPathItems }) => {
  return (
   <header className='pt-3 px-3 pb-0'>
     <form className="flex items-center bg-white relative rounded-md m-0 py-0 px-3 h-14 w-full ">
@@ -15,4 +15,6 @@ export const PainPerduSearchBar: FC<Props> = ({ displayPathItems }) => {
     </form>
   </header>
  )
-};
+}
+
+export default PainPerduSearchBar
