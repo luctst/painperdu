@@ -1,6 +1,25 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { PainPerdu } from './painPerdu';
 
+const generateRoutes = (number: number): Array<Record<string, string | boolean>> => {
+  const routes = [];
+
+  routes.push({
+    alias: 'c',
+    path: '/c',
+    isSelected: false,
+  });
+  for(let i = 0; i < number; i++) {
+    routes.push({
+      alias: 'hm',
+      path: '/home',
+      isSelected: false,
+    });
+  }
+
+  return routes;
+}
+
 export default {
   title: 'PainPerdu',
   component: PainPerdu,
@@ -9,138 +28,7 @@ export default {
   },
   args: {
     teleport: "#popper-root",
-    pathItems: [
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hm',
-        path: '/home',
-        isSelected: false,
-      },
-      {
-        alias: 'hq',
-        path: '/qg',
-        isSelected: false,
-      },
-      {
-        alias: 'abt',
-        path: '/about',
-        isSelected: false,
-      },
-      {
-        alias: 'ct',
-        path: '/contact',
-        isSelected: false,
-      },
-    ]
+    pathItems: generateRoutes(100),
   }
 } satisfies Meta<typeof PainPerdu>;
 
