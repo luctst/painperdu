@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { PainPerdu } from './painPerdu';
+import type { PathItem } from '../../types'
 
 const generateRoutes = (number: number): Array<Record<string, string | boolean>> => {
   const routes = [];
@@ -28,7 +29,7 @@ export default {
   },
   args: {
     teleport: "#popper-root",
-    pathItems: generateRoutes(100),
+    pathItems: generateRoutes(100) as PathItem[],
   }
 } satisfies Meta<typeof PainPerdu>;
 
