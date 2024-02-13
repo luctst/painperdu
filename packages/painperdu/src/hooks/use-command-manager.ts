@@ -5,7 +5,12 @@ interface Results {
 };
 
 export const useCommandManager = (eventCode: string, commandHandler: CommandHandler ): Results => {
-	if (commandHandler[eventCode] === undefined) {
+	const obj = {
+		Escape: () => {},
+		KeyK : () => {}
+	}
+
+	if (commandHandler[eventCode as keyof typeof obj] === undefined) {
 	   return {
 			shouldCallFn: false,
 		};
