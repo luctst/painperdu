@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { createRef, useEffect, useRef ,useState } from 'react'
+import { useEffect, useRef , useState } from 'react'
 import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
 import type { CommandHandler, PathItem } from '../../types'
 import { useCommandManager } from '../../hooks/use-command-manager'
@@ -15,40 +15,43 @@ const DefaultResults = (): JSX.Element => (
 	</div>
 )
 
-export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventDispatched }): JSX.Element => {
-  const mainRef = useRef<HTMLElement | null>(null)
-  const itemRef = createRef<HTMLAnchorElement>()
+const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventDispatched }): JSX.Element => {
   const [cursor, setCursor] = useState<number>(-1)
   const [cursorOldState, setCursorOldState] = useState<number>(-1)
   const [routes, setRoutes] = useState<PathItem[]>([])
+  const mainRef = useRef<HTMLElement>(null)
+  const itemsRef = useRef(null)
 
-  const handleScrollBar = (arrowPosition: string): void => {
-    const containerScrollable = mainRef.current
-    if (containerScrollable === null) return
+  itemsRef.current = new Map()
 
-    const itemSelected = itemRef.current?.parentElement
-    const containerScrollableScrollPx =
-    containerScrollable.clientHeight + containerScrollable.scrollTop
+  const handleScrollBar = (isArrowUp: 'up' | 'down'): void => {
+    if (cursor <= 0) return
 
-    if (arrowPosition === "down") {
-      if ((itemSelected as HTMLElement)?.offsetTop >= containerScrollableScrollPx) {
-        containerScrollable?.scroll({
-          top: containerScrollable.scrollTop + ((itemSelected as HTMLElement)?.clientHeight - 10),
-          behavior: 'smooth'
+    const liActive = itemsRef?.current?.get(cursor)
+
+    if(mainRef?.current?.clientHeight === undefined) return
+    const containerScrollableScrollPx = mainRef?.current?.clientHeight + mainRef?.current?.scrollTop
+
+    if (isArrowUp === 'up') {
+      if (liActive?.getElementOffsetTop() <= containerScrollableScrollPx) {
+        mainRef.current?.scroll({
+          top: mainRef.current.scrollTop - liActive.getElementHeight(),
         })
       }
+
+      return
     }
 
-    if (arrowPosition === "up") {
-      containerScrollable?.scroll({
-        top: containerScrollable.scrollTop - ((itemSelected as HTMLElement)?.clientHeight - 10),
-        behavior: 'smooth'
+    if (liActive?.getElementOffsetTop() >= containerScrollableScrollPx) {
+      mainRef.current?.scroll({
+        top: mainRef.current.scrollTop + liActive.getElementHeight(),
       })
     }
   }
 
   const onArrowUp = (): void => {
     if (cursor <= 0) return
+
     setCursorOldState(cursor)
     setCursor(cursor - 1)
     handleScrollBar('up')
@@ -56,6 +59,7 @@ export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items,
 
   const onArrowDown = (): void => {
     if (cursor === routes.length) return
+
     setCursorOldState(cursor)
     setCursor(cursor + 1)
     handleScrollBar('down')
@@ -96,27 +100,38 @@ export const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items,
     (commands as any)[eventDispatched.eventType].call()
   }, [eventDispatched])
 
-  useEffect(() => { setRoutes([ ...items ]) }, [items])
+  useEffect(() => {
+    setCursorOldState(-1);
+    setCursor(-1);
+    setRoutes([ ...items ])
+  }, [items])
 
   if (items.length <= 0) return <DefaultResults />
 
   return (
-    <main ref={mainRef} className="min-h-3 py-0 px-3 mb-3 overflow-y-auto">
-      <div className="text-sm	my-0 mx-auto h-3/5">
-      <ul className="flex-col mb-12 pt-8 pl-4 overflow-y-auto">
-        {
-          routes.map((route, index) =>
-            <PainPerduListItem
-              key={index}
-              route={route}
-              itemIndex={index}
-              itemRef={itemRef}
-              cursorUpdated={cursorUpdated}
-            />
-          )
-        }
-      </ul>
-      </div>
+    <main className="min-h-3 py-0 px-3 overflow-y-auto" ref={mainRef}>
+			<div className="text-sm	my-0 mx-auto">
+  		 <div className="max-h-[500px]">
+        <ul className="flex-col mb-12 pt-8 pl-4">
+          {
+            routes.map((route, index) =>
+              <PainPerduListItem
+                key={index}
+                itemIndex={index}
+                route={route}
+                ref={(node: any): void => {
+                  if (itemsRef.current === null) return
+                  itemsRef?.current.set(index, node)
+                }}
+                cursorUpdated={cursorUpdated}
+              />
+            )
+          }
+        </ul>
+       </div>
+			</div>
 		</main>
-  );
+  )
 }
+
+export default PainPerduItemWrapper
