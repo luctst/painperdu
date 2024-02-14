@@ -7,7 +7,7 @@ interface Props {
 const PainPerduSearchBar: FC<Props> = ({ displayPathItems }) => {
  return (
   <header className='pt-3 px-3 pb-0'>
-    <form className="flex items-center bg-white relative rounded-md m-0 py-0 px-3 h-14 w-full ">
+    <form className="flex items-center bg-white bg-opacity-60 relative rounded-md m-0 py-0 px-3 h-14 w-full shadow-[inset_0_0_0_2px_#fcec57]">
       <label className="flex items-center justify-center m-0 p-0 text-yellow-200" id="form--label" htmlFor="painperdu-input">
         <svg width="20" height="20" viewBox="0 0 20 20"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"></path></svg>
       </label>

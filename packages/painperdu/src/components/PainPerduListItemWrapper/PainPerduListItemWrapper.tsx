@@ -10,7 +10,7 @@ interface PainPerduListItemWrapperProps {
 }
 
 const DefaultResults = (): JSX.Element => (
-	<div className="pain-perdu-default-results flex-col mb-12 pt-8 pl-4 text-center">
+	<div className="flex-col mb-12 pt-8 pl-4 text-center text-[#6c757d]">
 		<p>Start writing to search routes</p>
 	</div>
 )
@@ -20,7 +20,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
   const [cursorOldState, setCursorOldState] = useState<number>(-1)
   const [routes, setRoutes] = useState<PathItem[]>([])
   const mainRef = useRef<HTMLElement>(null)
-  const itemsRef:any = useRef<HTMLElement | null>(null)
+  const itemsRef = useRef<HTMLLIElement | null>(null)
 
   itemsRef.current = new Map()
 
@@ -109,10 +109,10 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
   if (items.length <= 0) return <DefaultResults />
 
   return (
-    <main className="min-h-3 py-0 px-3 overflow-y-auto" ref={mainRef}>
+    <main className="min-h-3 max-h-[488px] h-[60vh] py-0 px-3 overflow-y-auto" ref={mainRef}>
 			<div className="text-sm	my-0 mx-auto">
   		 <div className="max-h-[500px]">
-        <ul className="flex-col mb-12 pt-8 pl-4">
+        <ul className="flex-col mb-12 pt-8 pl-4 text-[#6c757d]">
           {
             routes.map((route, index) =>
               <PainPerduListItem

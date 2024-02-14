@@ -40,7 +40,7 @@ export const PainPerduSkeleton = (): JSX.Element => {
           </div>
           <div className="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"></div>
         </div>
-        <span className="sr-only">Loading...</span>
+        <span className="sr-only text-[#6c757d]">Loading...</span>
       </div>
     </>
   );

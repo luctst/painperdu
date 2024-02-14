@@ -1,37 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.bg-white {
-  --tw-bg-opacity: .6;
-}
-
-form {
-  box-shadow: inset 0 0 0 2px #fcec57;
-}
-
-footer {
-  box-shadow: 0 -1px #e0e3e8, 0 -3px 6px #45629b1f;
-}
-
-ul {
-  color: #6c757d;
-}
-
-kbd {
-  background: linear-gradient(-225deg,#d5dbe4,#f8f8f8);
-  background-color: #0000001a;
-}
-
-span {
-  color: #6c757d;
-}
-
-.pain-perdu-default-results, .painperdu--modal--footer--thanks p {
-  color: #6c757d;
-}
-
-main {
-  height: 60vh;
-  max-height: 488px;
-}

@@ -1,20 +1,13 @@
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import type { ChangeEvent, FC } from 'react'
 import { createPortal } from 'react-dom'
 import type { CommandHandler, PathItem } from '@/types'
 import '../../index'
 import { useCommandManager } from '../../hooks/use-command-manager'
 import { PainPerduSkeleton } from '../PainPerduSkeleton/PainPerduSkeleton'
-
-function delayForDemo(promise: any) {
-  return new Promise(resolve => {
-  	setTimeout(resolve, 2000)
-  }).then(() => promise)
-}
-
-const PainPerduSearchBar = lazy(() => delayForDemo(import('../PainPerduSearchBar/PainPerduSearchBar')))
-const PainPerduListItemWrapper = lazy(() => delayForDemo(import('../PainPerduListItemWrapper/PainPerduListItemWrapper')))
-const PainPerduFooter = lazy(() => delayForDemo(import('../PainPerduFooter/PainPerduFooter')))
+import PainPerduSearchBar from '../PainPerduSearchBar/PainPerduSearchBar'
+import PainPerduListItemWrapper from '../PainPerduListItemWrapper/PainPerduListItemWrapper'
+import PainPerduFooter from '../PainPerduFooter/PainPerduFooter'
 
 type EventDispatched = {
 	eventType: string
@@ -89,8 +82,8 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 			onClick={() => { shouldActiveModal(false) }}
 		></div>
 		<div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-7/12">
-			<div className="m-w-[560px] border-0 rounded-xl shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-full">
-				<div className="bg-white px-0 pt-1">
+			<div className="m-w-[560px] border-0 rounded-xl shadow-lg relative flex flex-col bg-white bg-opacity-60 outline-none focus:outline-none w-full">
+				<div className="bg-white bg-opacity-60 px-0 pt-1">
 					<div>
 						<div>
 							<Suspense fallback={<PainPerduSkeleton />}>
