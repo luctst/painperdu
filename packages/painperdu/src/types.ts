@@ -14,3 +14,8 @@ export interface CustomLiRef {
   getElementHeight: () => number | undefined;
   getElementOffsetTop: () => number | undefined;
 }
+
+export interface CustomLiRef {
+  getElementHeight: () => number | undefined;
+  getElementOffsetTop: () => number | undefined;
+}
