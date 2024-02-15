@@ -9,3 +9,8 @@ export type commandsAvailables = 'KeyK' | 'Escape' | 'ArrowDown' | 'ArrowUp';
 export type CommandHandler = {
   [key in commandsAvailables]?: (args?: unknown) => void;
 }
+
+export interface CustomLiRef {
+  getElementHeight: () => number | undefined;
+  getElementOffsetTop: () => number | undefined;
+}

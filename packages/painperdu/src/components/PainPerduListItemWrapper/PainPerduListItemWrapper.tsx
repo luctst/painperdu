@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { useEffect, useRef , useState } from 'react'
 import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
-import type { CommandHandler, PathItem } from '../../types'
+import type { CommandHandler, PathItem, CustomLiRef } from '../../types'
 import { useCommandManager } from '../../hooks/use-command-manager'
 
 interface PainPerduListItemWrapperProps {
@@ -20,14 +20,12 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
   const [cursorOldState, setCursorOldState] = useState<number>(-1)
   const [routes, setRoutes] = useState<PathItem[]>([])
   const mainRef = useRef<HTMLElement>(null)
-  const itemsRef = useRef<HTMLLIElement | null>(null)
-
-  itemsRef.current = new Map()
+  const itemsRef = new Map();
 
   const handleScrollBar = (isArrowUp: 'up' | 'down'): void => {
     if (cursor <= 0) return
 
-    const liActive = itemsRef?.current?.get(cursor)
+    const liActive = itemsRef?.get(cursor)
 
     if(mainRef?.current?.clientHeight === undefined) return
     const containerScrollableScrollPx = mainRef?.current?.clientHeight + mainRef?.current?.scrollTop
@@ -117,13 +115,11 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
             routes.map((route, index) =>
               <PainPerduListItem
                 key={index}
-                itemIndex={index}
                 route={route}
-                ref={(node: any): void => {
-                  if (itemsRef.current === null) return
-                  itemsRef?.current.set(index, node)
+                ref={(node: CustomLiRef): void => {
+                  itemsRef?.set(index, node)
                 }}
-                cursorUpdated={cursorUpdated}
+                cursorUpdated={() => { cursorUpdated(index) }}
               />
             )
           }

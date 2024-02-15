@@ -1,24 +1,19 @@
 import { forwardRef, useImperativeHandle, useRef } from 'react';
-import type { FC } from 'react'
-import type { PathItem } from '../../types';
+import type { PathItem, CustomLiRef } from '../../types';
 
 interface Props {
   route: PathItem
-  itemIndex: number
-  cursorUpdated: (itemIndex: number) => void
+  cursorUpdated: () => void
 }
 
-export const PainPerduListItem: FC<Props> = forwardRef((props, ref) => {
+export const PainPerduListItem = forwardRef<CustomLiRef, Props>((props, ref) => {
   const liRef = useRef<HTMLLIElement | null>(null)
 
   useImperativeHandle(ref, () => {
     return {
       getElementHeight() {
-        if (liRef.current === null) return
+        if (liRef.current === null) return;
         return liRef?.current.clientHeight
-      },
-      getActualRef() {
-        return liRef
       },
       getElementOffsetTop() {
         if (liRef.current === null) return
@@ -31,8 +26,8 @@ export const PainPerduListItem: FC<Props> = forwardRef((props, ref) => {
 	  <li
       ref={liRef}
       className={`flex items-center ${props.route.isSelected ? 'bg-yellow-200' : 'bg-white bg-opacity-60'}`}
-      onMouseOver={() => { props.cursorUpdated(props.itemIndex) }}
-      onMouseLeave={() => { props.cursorUpdated(props.itemIndex) }}
+      onMouseOver={() => { props.cursorUpdated() }}
+      onMouseLeave={() => { props.cursorUpdated() }}
       >
       <a className="w-full border-solid shadow-none border-y pl-3 decoration-none">
         <div className="flex w-full items-center pr-2 h-14 text-neutral-500">
