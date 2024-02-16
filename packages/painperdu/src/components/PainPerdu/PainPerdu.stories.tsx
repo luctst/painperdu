@@ -43,7 +43,7 @@ export const Default: Story = {
           <div className="flex justify-center items-center h-full">
             <h1>Press <kbd>CMD</kbd> + <kbd>k</kbd> to open painperdu</h1>
           </div>
-          <PainPerdu { ...context.args }/>
+          <Story { ...context.args }/>
         </>
       );
     },

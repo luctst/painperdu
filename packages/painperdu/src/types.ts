@@ -7,7 +7,7 @@ export type PathItem = {
 export type commandsAvailables = 'KeyK' | 'Escape' | 'ArrowDown' | 'ArrowUp';
 
 export type CommandHandler = {
-  [key in commandsAvailables]?: (args?: unknown) => void;
+  [key: string]: (args?: unknown) => void;
 }
 
 export interface CustomLiRef {

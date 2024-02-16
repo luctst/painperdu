@@ -1,13 +1,13 @@
-import { Suspense, useEffect, useState } from 'react'
-import type { ChangeEvent, FC } from 'react'
-import { createPortal } from 'react-dom'
 import type { CommandHandler, PathItem } from '@/types'
-import '../../index'
+import type { FC } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useCommandManager } from '../../hooks/use-command-manager'
-import { PainPerduSkeleton } from '../PainPerduSkeleton/PainPerduSkeleton'
-import PainPerduSearchBar from '../PainPerduSearchBar/PainPerduSearchBar'
-import PainPerduListItemWrapper from '../PainPerduListItemWrapper/PainPerduListItemWrapper'
+import '../../index'
 import PainPerduFooter from '../PainPerduFooter/PainPerduFooter'
+import PainPerduListItemWrapper from '../PainPerduListItemWrapper/PainPerduListItemWrapper'
+import PainPerduSearchBar from '../PainPerduSearchBar/PainPerduSearchBar'
+import { PainPerduSkeleton } from '../PainPerduSkeleton/PainPerduSkeleton'
 
 type EventDispatched = {
 	eventType: string
@@ -37,12 +37,12 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 		setModal(isModal)
 	}
 
-	const displayPathItems = (event: ChangeEvent<HTMLInputElement>): void => {
-		if ((event.target as HTMLInputElement).value === '') {
+	const displayPathItems = (value: string): void => {
+		if (value === '') {
 			setItemsList([])
 			return
 		}
-		setItemsList(pathItems.filter((pathItem: PathItem) => pathItem.alias.includes((event.target as HTMLInputElement).value)))
+		setItemsList(pathItems.filter((pathItem: PathItem) => pathItem.alias.includes(value)))
 	}
 
 	const commandsManager = (event: KeyboardEvent): void => {
@@ -60,7 +60,13 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 			return;
 		};
 
-		(commands as any)[event.code].call(null);
+		if (commands) {
+		  if (commands[event.code]) {
+				  if (typeof commands[event.code] === 'function') {
+				      commands[event.code]?.call(null);
+						}
+				}
+		}
 	};
 
 	useEffect(() => {
@@ -97,6 +103,6 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 			</div>
 		</div>
 	</>,
-	document.querySelector(teleport) as HTMLElement
+	document.querySelector(teleport)!
  )
 }
