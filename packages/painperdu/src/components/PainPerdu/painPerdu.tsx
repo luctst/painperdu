@@ -43,7 +43,6 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 			setItemsList([])
 			return
 		}
-
 	}
 
 	const commandsManager = (event: KeyboardEvent): void => {
