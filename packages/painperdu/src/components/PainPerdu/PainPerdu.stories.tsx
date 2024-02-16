@@ -37,7 +37,7 @@ type Story = StoryObj<typeof PainPerdu>;
 
 export const Default: Story = {
   decorators: [
-    (Story, context) => {
+    (_Story, context) => {
       return (
         <>
           <div className="flex justify-center items-center h-full">
