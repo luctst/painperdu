@@ -27,6 +27,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  tags: ['autodocs'],
   args: {
     teleport: "#popper-root",
     pathItems: generateRoutes(100),

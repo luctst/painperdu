@@ -83,7 +83,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 		<div
 			className={`
 				flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50
-				outline-none focus:outline-none ${isModalActive ? 'bg-slate-500 opacity-80' : ''}`
+				outline-none focus:outline-none ${isModalActive ? 'bg-[rgba(0,0,0,.8)] opacity-80' : ''}`
 			}
 			onClick={() => { shouldActiveModal(false) }}
 		></div>
