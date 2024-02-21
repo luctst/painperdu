@@ -11,39 +11,33 @@ const PainPerduListItemWrapper = lazy(() => import('../PainPerduListItemWrapper/
 const PainPerduFooter = lazy(() => import('../PainPerduFooter/PainPerduFooter'));
 
 type EventDispatched = {
-	eventType: string
-}
+  eventType: string;
+};
 
 interface Props {
-  pathItems: PathItem[]
-  teleport: string
+  pathItems: PathItem[];
+  teleport: string;
 }
 
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
-	const [isModalActive, setModal] = useState<boolean>(false)
-	const [itemsList, setItemsList] = useState<PathItem[]>([])
-	const [eventToDispatch, setEventToDispatch] = useState<EventDispatched | null>(null)
+  const [isModalActive, setModal] = useState<boolean>(false);
+  const [itemsList, setItemsList] = useState<PathItem[]>([]);
+  const [eventToDispatch, setEventToDispatch] =
+    useState<EventDispatched | null>(null);
 
-	const openModal = (isMetaKey: boolean): void => {
-		if (isModalActive || !isMetaKey) return
-		setModal(true)
-	}
+  const openModal = (isMetaKey: boolean): void => {
+    if (isModalActive || !isMetaKey) return;
+    setModal(true);
+  };
 
-	const closeModal = (): void => {
-		if (!isModalActive) return
-		setModal(false)
-	}
+  const closeModal = (): void => {
+    if (!isModalActive) return;
+    setModal(false);
+  };
 
-	const shouldActiveModal = (isModal: boolean): void => {
-		setModal(isModal)
-	}
-
-	const displayPathItems = (value: string): void => {
-		if (value === '') {
-			setItemsList([])
-			return
-		}
-	}
+  const shouldActiveModal = (isModal: boolean): void => {
+    setModal(isModal);
+  };
 
 	const commandsManager = (event: KeyboardEvent): void => {
  		const eventKey = navigator.userAgent.replace(/\s/g, "").toUpperCase().includes('MACOSX') ? event.metaKey : event.ctrlKey
@@ -69,40 +63,54 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 		}
 	}
 
-	useEffect(() => {
-		window.addEventListener('keydown', commandsManager)
-		return () => {
-			window.removeEventListener('keydown', commandsManager)
-		}
-	})
+  const displayPathItems = useCallback((value: string): void => {
+    if (value === "") {
+      setItemsList([]);
+      return;
+    }
+    setItemsList(
+      pathItems.filter((pathItem: PathItem) => pathItem.alias.includes(value)),
+    );
+  }, []);
 
- if (!isModalActive) return (null)
+  useEffect(() => {
+    window.addEventListener("keydown", commandsManager);
+    return () => {
+      window.removeEventListener("keydown", commandsManager);
+    };
+  });
 
- return createPortal(
-	<>
-		<div
-			className={`
-				flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50
-				outline-none focus:outline-none ${isModalActive ? 'bg-slate-500 opacity-80' : ''}`
-			}
-			onClick={() => { shouldActiveModal(false) }}
-		></div>
-		<div className="flex justify-center items-center my-0 mx-auto mt-40 overflow-x-hidden overflow-y-auto relative inset-0 z-50 outline-none focus:outline-none w-7/12">
-			<div className="m-w-[560px] border-0 rounded-xl shadow-lg relative flex flex-col bg-white bg-opacity-60 outline-none focus:outline-none w-full">
-				<div className="bg-white bg-opacity-60 px-0 pt-1">
-					<div>
-						<div>
-							<Suspense fallback={<PainPerduSkeleton />}>
-								<PainPerduSearchBar displayPathItems={displayPathItems} />
-								<PainPerduListItemWrapper items={itemsList} eventDispatched={eventToDispatch}/>
-								<PainPerduFooter />
-							</Suspense>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</>,
-	document.querySelector(teleport)!
- )
-}
+  if (!isModalActive) return null;
+
+  return createPortal(
+    <>
+      <div
+        className={`
+				fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden
+				outline-none focus:outline-none ${isModalActive ? "bg-slate-500 opacity-80" : ""}`}
+        onClick={() => {
+          shouldActiveModal(false);
+        }}
+      ></div>
+      <div className="relative inset-0 z-50 mx-auto my-0 mt-40 flex w-7/12 items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
+        <div className="m-w-[560px] relative flex w-full flex-col rounded-xl border-0 bg-white bg-opacity-60 shadow-lg outline-none focus:outline-none">
+          <div className="bg-white bg-opacity-60 px-0 pt-1">
+            <div>
+              <div>
+                <Suspense fallback={<PainPerduSkeleton />}>
+                  <PainPerduSearchBar displayPathItems={displayPathItems} />
+                  <PainPerduListItemWrapper
+                    items={itemsList}
+                    eventDispatched={eventToDispatch}
+                  />
+                  <PainPerduFooter />
+                </Suspense>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>,
+    document.querySelector(teleport)!,
+  );
+};

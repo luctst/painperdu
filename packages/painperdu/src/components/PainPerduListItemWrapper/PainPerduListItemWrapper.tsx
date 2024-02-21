@@ -20,12 +20,12 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
   const [cursorOldState, setCursorOldState] = useState<number>(-1)
   const [routes, setRoutes] = useState<PathItem[]>([])
   const mainRef = useRef<HTMLElement>(null)
-  const itemsRef = new Map();
+  const itemsRef = useRef(new Map());
 
   const handleScrollBar = (isArrowUp: 'up' | 'down'): void => {
     if (cursor <= 0) return
 
-    const liActive = itemsRef?.get(cursor)
+    const liActive = itemsRef?.current.get(cursor)
 
     if(mainRef?.current?.clientHeight === undefined) return
     const containerScrollableScrollPx = mainRef?.current?.clientHeight + mainRef?.current?.scrollTop
@@ -124,7 +124,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
                 key={index}
                 route={route}
                 ref={(node: CustomLiRef): void => {
-                  itemsRef?.set(index, node)
+                  itemsRef?.current.set(index, node)
                 }}
                 cursorUpdated={() => { cursorUpdated(index) }}
               />
