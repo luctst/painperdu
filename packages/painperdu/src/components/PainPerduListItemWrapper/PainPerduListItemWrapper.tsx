@@ -132,7 +132,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
           }
         </ul>
        </div>
-			{/* </div> */}
+			</div>
 		</main>
   )
 }
