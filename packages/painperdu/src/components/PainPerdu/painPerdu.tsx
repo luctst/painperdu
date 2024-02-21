@@ -46,28 +46,29 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 	}
 
 	const commandsManager = (event: KeyboardEvent): void => {
-	   const commands: CommandHandler = {
-				KeyK: () => { openModal(event.metaKey) },
-  		  Escape: closeModal,
-		 }
-
-	   const { shouldCallFn } = useCommandManager(event.code, commands);
+		const isMac = navigator.userAgent.indexOf('Mac OS X') != -1
+		const eventKey = isMac ? event.metaKey : event.ctrlKey
+		const commands: CommandHandler = {
+			KeyK: () => { openModal(eventKey) },
+			Escape: closeModal,
+		}
+	  const { shouldCallFn } = useCommandManager(event.code, commands)
 
 		if (!shouldCallFn) {
 		  setEventToDispatch({
 				eventType: event.code
 			})
-			return;
-		};
+			return
+		}
 
 		if (commands) {
 		  if (commands[event.code]) {
-				  if (typeof commands[event.code] === 'function') {
-				      commands[event.code]?.call(null);
-						}
+				if (typeof commands[event.code] === 'function') {
+				  commands[event.code]?.call(null)
 				}
+			}
 		}
-	};
+	}
 
 	useEffect(() => {
 		window.addEventListener('keydown', commandsManager)
