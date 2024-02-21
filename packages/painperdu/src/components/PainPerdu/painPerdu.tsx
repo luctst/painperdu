@@ -46,7 +46,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 	}
 
 	const commandsManager = (event: KeyboardEvent): void => {
-		const isMac = navigator.userAgent.indexOf('Mac OS X') != -1
+ 		const eventKey = navigator.userAgent.replace(/\s/g, "").toUppercase().includes('MACOSX') ? event.metaKey : event.ctrlKey
 		const eventKey = isMac ? event.metaKey : event.ctrlKey
 		const commands: CommandHandler = {
 			KeyK: () => { openModal(eventKey) },
