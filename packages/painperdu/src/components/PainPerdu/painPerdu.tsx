@@ -1,13 +1,14 @@
 import type { CommandHandler, PathItem } from '@/types'
 import type { FC } from 'react'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState, lazy } from 'react'
 import { createPortal } from 'react-dom'
 import { useCommandManager } from '../../hooks/use-command-manager'
 import '../../index'
-import PainPerduFooter from '../PainPerduFooter/PainPerduFooter'
-import PainPerduListItemWrapper from '../PainPerduListItemWrapper/PainPerduListItemWrapper'
-import PainPerduSearchBar from '../PainPerduSearchBar/PainPerduSearchBar'
 import { PainPerduSkeleton } from '../PainPerduSkeleton/PainPerduSkeleton'
+
+const PainPerduSearchBar = lazy(() => import('../PainPerduSearchBar/PainPerduSearchBar'));
+const PainPerduListItemWrapper = lazy(() => import('../PainPerduListItemWrapper/PainPerduListItemWrapper'));
+const PainPerduFooter = lazy(() => import('../PainPerduFooter/PainPerduFooter'));
 
 type EventDispatched = {
 	eventType: string
