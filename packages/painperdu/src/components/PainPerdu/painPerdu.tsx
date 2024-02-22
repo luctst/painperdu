@@ -1,6 +1,6 @@
 import type { CommandHandler, PathItem } from '@/types'
 import type { FC } from 'react'
-import { Suspense, useEffect, useState, lazy } from 'react'
+import { Suspense, useEffect, useState, lazy,useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { useCommandManager } from '../../hooks/use-command-manager'
 import '../../index'
