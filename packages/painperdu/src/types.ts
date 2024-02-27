@@ -1,7 +1,7 @@
-export interface PathItem {
-	alias: string
-	path: string
-	isSelected: boolean
+import type { RouteObject } from 'react-router-dom';
+
+export type RouteItems = RouteObject & {
+  isSelected: boolean;
 }
 
 export type commandsAvailables = 'KeyK' | 'Escape' | 'ArrowDown' | 'ArrowUp';

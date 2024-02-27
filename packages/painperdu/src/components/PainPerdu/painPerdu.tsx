@@ -1,4 +1,5 @@
-import type { CommandHandler, PathItem } from '@/types'
+import type { CommandHandler } from '@/types'
+import type { RouteObject } from 'react-router-dom';
 import type { FC } from 'react'
 import { Suspense, useEffect, useState, lazy,useCallback } from 'react'
 import { createPortal } from 'react-dom'
@@ -10,18 +11,18 @@ const PainPerduSearchBar = lazy(() => import('../PainPerduSearchBar/PainPerduSea
 const PainPerduListItemWrapper = lazy(() => import('../PainPerduListItemWrapper/PainPerduListItemWrapper'));
 const PainPerduFooter = lazy(() => import('../PainPerduFooter/PainPerduFooter'));
 
-type EventDispatched = {
+interface EventDispatched {
   eventType: string;
 };
 
 interface Props {
-  pathItems: PathItem[];
+  pathItems: RouteObject[];
   teleport: string;
 }
 
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
   const [isModalActive, setModal] = useState<boolean>(false);
-  const [itemsList, setItemsList] = useState<PathItem[]>([]);
+  const [itemsList, setItemsList] = useState<RouteObject[]>([]);
   const [eventToDispatch, setEventToDispatch] =
     useState<EventDispatched | null>(null);
 
@@ -69,7 +70,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
       return;
     }
     setItemsList(
-      pathItems.filter((pathItem: PathItem) => pathItem.alias.includes(value)),
+      pathItems.filter((pathItem: RouteObject) => pathItem.path?.includes(value)),
     );
   }, []);
 
@@ -78,7 +79,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
     return () => {
       window.removeEventListener("keydown", commandsManager);
     };
-  });
+  }, []);
 
   if (!isModalActive) return null;
 
