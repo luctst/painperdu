@@ -3,7 +3,7 @@ import { PainPerdu } from './painPerdu';
 
 export default {
   title: 'PainPerdu',
-  render: (args) => <PainPerdu teleport="#popper-root" pathItems={args}/>,
+  render: (args) => <PainPerdu teleport="#popper-root" pathItems={args.pathItems}/>,
   parameters: {
     layout: 'fullscreen',
   },

@@ -1,9 +1,8 @@
 import type { Preview } from "@storybook/react";
-import { MemoryRouter, Routes, Route, createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { withRouter, reactRouterParameters } from 'storybook-addon-react-router-v6';
+import { MemoryRouter, Routes, Route, createMemoryRouter } from 'react-router-dom';
 import '../src/index.css';
 
-const router = createMemoryRouter([
+export const router = createMemoryRouter([
   {
     path: '/',
     element: <div>Heree</div>
