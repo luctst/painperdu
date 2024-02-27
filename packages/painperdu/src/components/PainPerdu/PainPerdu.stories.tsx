@@ -1,35 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { PainPerdu } from './painPerdu';
-import type { PathItem } from '../../types'
-
-const generateRoutes = (number: number): PathItem[] => {
-  const routes = [];
-
-  routes.push({
-    alias: 'c',
-    path: '/c',
-    isSelected: false,
-  });
-  for(let i = 0; i < number; i++) {
-    routes.push({
-      alias: 'hm',
-      path: '/home',
-      isSelected: false,
-    });
-  }
-
-  return routes;
-}
 
 export default {
   title: 'PainPerdu',
-  component: PainPerdu,
+  render: (args) => <PainPerdu teleport="#popper-root" pathItems={args}/>,
   parameters: {
     layout: 'fullscreen',
-  },
-  args: {
-    teleport: "#popper-root",
-    pathItems: generateRoutes(100),
   },
 } satisfies Meta<typeof PainPerdu>;
 

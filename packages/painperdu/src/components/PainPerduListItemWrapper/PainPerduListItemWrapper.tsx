@@ -1,11 +1,12 @@
 import type { FC } from 'react'
 import { useEffect, useRef , useState } from 'react'
+import type { RouteObject } from 'react-router-dom';
 import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
-import type { CommandHandler, PathItem, CustomLiRef } from '../../types'
+import type { CommandHandler, CustomLiRef, RouteItems } from '../../types'
 import { useCommandManager } from '../../hooks/use-command-manager'
 
 interface PainPerduListItemWrapperProps {
-  items: PathItem[],
+  items: RouteObject[],
   eventDispatched: { eventType: string } | null
 }
 
@@ -18,7 +19,7 @@ const DefaultResults = (): JSX.Element => (
 const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventDispatched }): JSX.Element => {
   const [cursor, setCursor] = useState<number>(-1)
   const [cursorOldState, setCursorOldState] = useState<number>(-1)
-  const [routes, setRoutes] = useState<PathItem[]>([])
+  const [routes, setRoutes] = useState<RouteItems[]>([])
   const mainRef = useRef<HTMLElement>(null)
   const itemsRef = useRef(new Map());
 
@@ -108,7 +109,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
   useEffect(() => {
     setCursorOldState(-1);
     setCursor(-1);
-    setRoutes([ ...items ])
+    setRoutes([ {...items, isSelected: false} ])
   }, [items])
 
   if (items.length <= 0) return <DefaultResults />
