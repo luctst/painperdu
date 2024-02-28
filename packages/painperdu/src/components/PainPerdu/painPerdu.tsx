@@ -20,6 +20,18 @@ interface Props {
   teleport: string;
 }
 
+interface ChildrenPathMatched  {
+  path: string | undefined
+  isSelected: boolean
+}
+
+interface PathsMatched  {
+  children: ChildrenPathMatched[]
+  path: string | undefined
+  isSelected: boolean
+}
+
+
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
   const [isModalActive, setModalActive] = useState<boolean>(false);
   const [itemsList, setItemsList] = useState<RouteObject[]>([]);
@@ -64,14 +76,60 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 		}
 	}
 
+  const childrenPathsformatted = (value: string) => {
+    const pathsMatched: PathsMatched[] = []
+
+    pathItems.forEach(pathItem => {
+      if (pathItem.path?.includes(value)) {
+        pathsMatched.push({
+          path: pathItem.path,
+          isSelected: false,
+          children: []
+        })
+
+        if (pathItem?.children?.length == undefined) return
+
+        if (pathItem?.children?.length > 0) {
+          pathItem.children.forEach(child => {
+            pathsMatched[pathsMatched.length - 1].children.push({
+              path: child.path,
+              isSelected: false
+            })
+          })
+        }
+        return
+      }
+
+      if (pathItem.children === undefined) return
+      if (pathItem.children.length <= 0) return
+
+      pathItem.children.forEach(child => {
+        if (!(child.path?.includes(value))) return
+        if (pathsMatched[pathsMatched.length - 1]?.path !== pathItem.path) {
+          pathsMatched.push({
+            path: pathItem.path,
+            isSelected: false,
+            children: []
+          })
+        }
+        pathsMatched[pathsMatched.length - 1].children.push({
+          path: child.path,
+          isSelected: false
+        })
+      })
+
+      return
+    })
+
+    return pathsMatched
+  }
+
   const displayPathItems = useCallback((value: string): void => {
     if (value === "") {
       setItemsList([]);
       return;
     }
-    setItemsList(
-      pathItems.filter((pathItem: RouteObject) => pathItem.path?.includes(value)),
-    );
+    childrenPathsformatted(value)
   }, []);
 
   useEffect(() => {
