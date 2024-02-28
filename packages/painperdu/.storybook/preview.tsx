@@ -8,12 +8,47 @@ export const router = createMemoryRouter([
     element: <div>Heree</div>
   },
   {
-    path: '/test',
-    element: <div/>
+    path: 'user',
+    element: <div />
   },
   {
-    path: '/user',
-    element: <div />
+    path: 'test',
+    element: <div/>,
+    children: [
+      {
+        path: ':id'
+      },
+      {
+        path: 'user/:id'
+      },
+      {
+        path: 'user/test/:test-id'
+      },
+      {
+        path: 'user/test/:test-about'
+      },
+    ],
+  },
+  {
+    path: 'about',
+    element: <div/>,
+    children: [
+      {
+        path: ':id'
+      },
+      {
+        path: 'about/:id'
+      },
+      {
+        path: 'about/test/:test-id'
+      },
+      {
+        path: 'about/test/:test-about'
+      },
+      {
+        path: 'contact'
+      },
+    ],
   },
 ]);
 
