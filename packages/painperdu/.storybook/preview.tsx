@@ -50,6 +50,27 @@ export const router = createMemoryRouter([
       },
     ],
   },
+  {
+    path: 'coucou',
+    element: <div/>,
+    children: [
+      {
+        path: ':id'
+      },
+      {
+        path: 'coucou/:id'
+      },
+      {
+        path: 'coucou/test/:test-id'
+      },
+      {
+        path: 'coucou/test/:test-about'
+      },
+      {
+        path: 'contact'
+      },
+    ],
+  },
 ]);
 
 const preview: Preview = {
