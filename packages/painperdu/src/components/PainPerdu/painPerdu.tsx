@@ -22,7 +22,7 @@ interface Props {
 
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
   const [isModalActive, setModalActive] = useState<boolean>(false);
-  const [itemsList, setItemsList] = useState<RouteObject[]>([]);
+  const [itemsList, setItemsList] = useState<RouteItems[]>([]);
   const [eventToDispatch, setEventToDispatch] =
     useState<EventDispatched | null>(null);
 
