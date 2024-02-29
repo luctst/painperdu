@@ -109,7 +109,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
   useEffect(() => {
     setCursorOldState(-1);
     setCursor(-1);
-    setRoutes([ {...items, isSelected: false} ])
+    setRoutes(items)
   }, [items])
 
   if (items.length <= 0) return <DefaultResults />
@@ -121,14 +121,14 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
         <ul className="flex-col mb-12 pt-8 pl-4 text-[#6c757d]">
           {
             routes.map((route, index) =>
-              <PainPerduListItem
-                key={index}
-                route={route}
-                ref={(node: CustomLiRef): void => {
-                  itemsRef?.current.set(index, node)
-                }}
-                cursorUpdated={() => { cursorUpdated(index) }}
-              />
+            <PainPerduListItem
+              key={index}
+              route={route}
+              ref={(node: CustomLiRef): void => {
+                itemsRef?.current.set(index, node)
+              }}
+              cursorUpdated={() => { cursorUpdated(index) }}
+            />
             )
           }
         </ul>
