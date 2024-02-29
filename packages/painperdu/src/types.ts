@@ -1,7 +1,9 @@
 import type { RouteObject } from 'react-router-dom';
 
 export type RouteItems = RouteObject & {
-  isSelected: boolean;
+  isSelected: boolean
+  isChildren?: boolean
+  path: string | undefined
 }
 
 export type commandsAvailables = 'KeyK' | 'Escape' | 'ArrowDown' | 'ArrowUp';

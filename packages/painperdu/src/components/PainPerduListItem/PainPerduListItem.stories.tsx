@@ -24,6 +24,8 @@ export const ListItemNotSelected: Story = {
     route: {
       ...defaultProps,
       isSelected: false,
+      isChildren: false,
+      path: 'test'
     },
   },
 };
@@ -34,6 +36,8 @@ export const ListItemSelected: Story = {
     route: {
       ...defaultProps,
       isSelected: true,
+      isChildren: false,
+      path: 'test'
     },
   },
 };

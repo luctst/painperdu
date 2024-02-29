@@ -20,7 +20,7 @@ const PainPerduSearchBar: FC<Props> = memo(function PainPerduSearchBar({
 
     intervalTimeout.current = setTimeout(() => {
       displayPathItems(value);
-    }, 500);
+    }, 1000);
   }, []);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => { debounce(e.target.value) };

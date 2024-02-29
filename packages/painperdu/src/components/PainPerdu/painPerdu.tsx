@@ -1,11 +1,11 @@
-import type { CommandHandler } from '@/types'
+import type { CommandHandler, RouteItems } from '@/types'
 import type { RouteObject } from 'react-router-dom';
 import type { FC } from 'react'
 import { Suspense, useEffect, useState, lazy,useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { useCommandManager } from '../../hooks/use-command-manager'
-import '../../index'
 import { PainPerduSkeleton } from '../PainPerduSkeleton/PainPerduSkeleton'
+import '../../index'
 
 const PainPerduSearchBar = lazy(() => import('../PainPerduSearchBar/PainPerduSearchBar'));
 const PainPerduListItemWrapper = lazy(() => import('../PainPerduListItemWrapper/PainPerduListItemWrapper'));
@@ -22,7 +22,7 @@ interface Props {
 
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
   const [isModalActive, setModalActive] = useState<boolean>(false);
-  const [itemsList, setItemsList] = useState<RouteObject[]>([]);
+  const [itemsList, setItemsList] = useState<RouteItems[]>([]);
   const [eventToDispatch, setEventToDispatch] =
     useState<EventDispatched | null>(null);
 
@@ -64,14 +64,64 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 		}
 	}
 
+  const childrenPathsformatted = (value: string) => {
+    const pathsMatched: RouteItems[] = []
+
+    pathItems.forEach(pathItem => {
+      if (pathItem.path?.includes(value)) {
+        pathsMatched.push({
+          path: pathItem.path,
+          isSelected: false,
+        })
+
+        if (pathItem?.children?.length == undefined) return
+
+        if (pathItem?.children?.length > 0) {
+          pathItem.children.forEach(child => {
+            pathsMatched.push({
+              path: child.path,
+              isSelected: false,
+              isChildren: true
+            })
+          })
+        }
+        return
+      }
+
+      if (pathItem.children === undefined) return
+      if (pathItem.children.length <= 0) return
+
+      let parentHasBeenCreated = false
+
+      pathItem.children.forEach(child => {
+        if (!(child.path?.includes(value))) return
+        if (!parentHasBeenCreated) {
+          pathsMatched.push({
+            path: pathItem.path,
+            isSelected: false,
+          })
+          parentHasBeenCreated = true
+        }
+
+        pathsMatched.push({
+          path: child.path,
+          isSelected: false,
+          isChildren: true
+        })
+      })
+
+      return
+    })
+
+    return pathsMatched
+  }
+
   const displayPathItems = useCallback((value: string): void => {
     if (value === "") {
       setItemsList([]);
       return;
     }
-    setItemsList(
-      pathItems.filter((pathItem: RouteObject) => pathItem.path?.includes(value)),
-    );
+    setItemsList(childrenPathsformatted(value))
   }, []);
 
   useEffect(() => {

@@ -1,12 +1,11 @@
 import type { FC } from 'react'
 import { useEffect, useRef , useState } from 'react'
-import type { RouteObject } from 'react-router-dom';
 import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
 import type { CommandHandler, CustomLiRef, RouteItems } from '../../types'
 import { useCommandManager } from '../../hooks/use-command-manager'
 
 interface PainPerduListItemWrapperProps {
-  items: RouteObject[],
+  items: RouteItems[],
   eventDispatched: { eventType: string } | null
 }
 
@@ -109,7 +108,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
   useEffect(() => {
     setCursorOldState(-1);
     setCursor(-1);
-    setRoutes([ {...items, isSelected: false} ])
+    setRoutes(items)
   }, [items])
 
   if (items.length <= 0) return <DefaultResults />
@@ -121,14 +120,14 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
         <ul className="flex-col mb-12 pt-8 pl-4 text-[#6c757d]">
           {
             routes.map((route, index) =>
-              <PainPerduListItem
-                key={index}
-                route={route}
-                ref={(node: CustomLiRef): void => {
-                  itemsRef?.current.set(index, node)
-                }}
-                cursorUpdated={() => { cursorUpdated(index) }}
-              />
+            <PainPerduListItem
+              key={index}
+              route={route}
+              ref={(node: CustomLiRef): void => {
+                itemsRef?.current.set(index, node)
+              }}
+              cursorUpdated={() => { cursorUpdated(index) }}
+            />
             )
           }
         </ul>
