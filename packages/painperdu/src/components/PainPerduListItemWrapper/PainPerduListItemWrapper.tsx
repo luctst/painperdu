@@ -1,12 +1,11 @@
 import type { FC } from 'react'
 import { useEffect, useRef , useState } from 'react'
-import type { RouteObject } from 'react-router-dom';
 import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
 import type { CommandHandler, CustomLiRef, RouteItems } from '../../types'
 import { useCommandManager } from '../../hooks/use-command-manager'
 
 interface PainPerduListItemWrapperProps {
-  items: RouteObject[],
+  items: RouteItems[],
   eventDispatched: { eventType: string } | null
 }
 

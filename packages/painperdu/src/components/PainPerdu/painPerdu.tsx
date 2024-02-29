@@ -20,15 +20,10 @@ interface Props {
   teleport: string;
 }
 
-interface ChildrenPathMatched  {
-  path: string | undefined
-  isSelected: boolean
-}
-
 interface PathsMatched  {
-  children: ChildrenPathMatched[]
   path: string | undefined
   isSelected: boolean
+  isChildren?: boolean
 }
 
 
