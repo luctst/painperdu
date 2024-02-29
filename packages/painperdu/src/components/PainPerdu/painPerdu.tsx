@@ -1,11 +1,11 @@
-import type { CommandHandler } from '@/types'
+import type { CommandHandler, RouteItems } from '@/types'
 import type { RouteObject } from 'react-router-dom';
 import type { FC } from 'react'
 import { Suspense, useEffect, useState, lazy,useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { useCommandManager } from '../../hooks/use-command-manager'
-import '../../index'
 import { PainPerduSkeleton } from '../PainPerduSkeleton/PainPerduSkeleton'
+import '../../index'
 
 const PainPerduSearchBar = lazy(() => import('../PainPerduSearchBar/PainPerduSearchBar'));
 const PainPerduListItemWrapper = lazy(() => import('../PainPerduListItemWrapper/PainPerduListItemWrapper'));
@@ -19,13 +19,6 @@ interface Props {
   pathItems: RouteObject[];
   teleport: string;
 }
-
-interface PathsMatched  {
-  path: string | undefined
-  isSelected: boolean
-  isChildren?: boolean
-}
-
 
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
   const [isModalActive, setModalActive] = useState<boolean>(false);
@@ -72,7 +65,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 	}
 
   const childrenPathsformatted = (value: string) => {
-    const pathsMatched: PathsMatched[] = []
+    const pathsMatched: RouteItems[] = []
 
     pathItems.forEach(pathItem => {
       if (pathItem.path?.includes(value)) {
