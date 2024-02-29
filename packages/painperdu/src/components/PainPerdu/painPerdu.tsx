@@ -21,23 +21,23 @@ interface Props {
 }
 
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
-  const [isModalActive, setModal] = useState<boolean>(false);
+  const [isModalActive, setModalActive] = useState<boolean>(false);
   const [itemsList, setItemsList] = useState<RouteObject[]>([]);
   const [eventToDispatch, setEventToDispatch] =
     useState<EventDispatched | null>(null);
 
   const openModal = (isMetaKey: boolean): void => {
     if (isModalActive || !isMetaKey) return;
-    setModal(true);
+    setModalActive(true);
   };
 
   const closeModal = (): void => {
     if (!isModalActive) return;
-    setModal(false);
+    setModalActive(false);
   };
 
   const shouldActiveModal = (isModal: boolean): void => {
-    setModal(isModal);
+    setModalActive(isModal);
   };
 
 	const commandsManager = (event: KeyboardEvent): void => {
@@ -57,7 +57,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
 
 		if (commands) {
 		  if (commands[event.code]) {
-				if (typeof commands[event.code] === 'function') {
+        if (typeof commands[event.code] === 'function') {
 				  commands[event.code]?.call(null)
 				}
 			}
@@ -79,7 +79,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
     return () => {
       window.removeEventListener("keydown", commandsManager);
     };
-  }, []);
+  });
 
   if (!isModalActive) return null;
 
