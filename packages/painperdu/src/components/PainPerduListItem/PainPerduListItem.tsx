@@ -25,7 +25,7 @@ export const PainPerduListItem = forwardRef<CustomLiRef, Props>((props, ref) => 
   return (
 	  <li
       ref={liRef}
-      className={`flex items-center ${props.route.isSelected ? 'bg-yellow-200' : 'bg-white bg-opacity-60'}`}
+      className={`flex items-center ${props.route.isSelected ? 'bg-yellow-200' : 'bg-white bg-opacity-60'} ${props.route.isChildren && 'ml-4'} `}
       onMouseOver={() => { props.cursorUpdated() }}
       onMouseLeave={() => { props.cursorUpdated() }}
       >
