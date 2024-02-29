@@ -84,16 +84,16 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
         pathsMatched.push({
           path: pathItem.path,
           isSelected: false,
-          children: []
         })
 
         if (pathItem?.children?.length == undefined) return
 
         if (pathItem?.children?.length > 0) {
           pathItem.children.forEach(child => {
-            pathsMatched[pathsMatched.length - 1].children.push({
+            pathsMatched.push({
               path: child.path,
-              isSelected: false
+              isSelected: false,
+              isChildren: true
             })
           })
         }
@@ -103,18 +103,22 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
       if (pathItem.children === undefined) return
       if (pathItem.children.length <= 0) return
 
+      let parentHasBeenCreated = false
+
       pathItem.children.forEach(child => {
         if (!(child.path?.includes(value))) return
-        if (pathsMatched[pathsMatched.length - 1]?.path !== pathItem.path) {
+        if (!parentHasBeenCreated) {
           pathsMatched.push({
             path: pathItem.path,
             isSelected: false,
-            children: []
           })
+          parentHasBeenCreated = true
         }
-        pathsMatched[pathsMatched.length - 1].children.push({
+
+        pathsMatched.push({
           path: child.path,
-          isSelected: false
+          isSelected: false,
+          isChildren: true
         })
       })
 
@@ -129,7 +133,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
       setItemsList([]);
       return;
     }
-    childrenPathsformatted(value)
+    setItemsList(childrenPathsformatted(value))
   }, []);
 
   useEffect(() => {
