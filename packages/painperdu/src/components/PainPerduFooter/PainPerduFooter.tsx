@@ -26,9 +26,6 @@ const PainPerduFooter = memo(function PainPerduFooter(): JSX.Element {
           <span className="text-xs text-[#6c757d]">to close</span>
         </li>
       </ul>
-      <div className="text-[#6c757d]">
-        <p className='text-xs m-0'>Made with 🤍 by <a href="" target="_blank" rel="noopener noreferrer">@antoine</a> and <a href="https://lucastostee.com" target="_blank" rel="noopener noreferrer">@lucas</a></p>
-      </div>
     </footer>
   )
 })
