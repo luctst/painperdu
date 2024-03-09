@@ -23,6 +23,7 @@ interface Props {
 export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
   const [isModalActive, setModalActive] = useState<boolean>(false);
   const [itemsList, setItemsList] = useState<RouteItems[]>([]);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [eventToDispatch, setEventToDispatch] =
     useState<EventDispatched | null>(null);
 
@@ -32,6 +33,11 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
   };
 
   const closeModal = (): void => {
+    if (isEditMode) {
+      setIsEditMode(false);
+      return;
+    }
+
     if (!isModalActive) return;
     setModalActive(false);
   };
@@ -72,6 +78,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
         pathsMatched.push({
           path: pathItem.path,
           isSelected: false,
+          isEditable: pathItem.path.includes(':'),
         })
 
         if (pathItem?.children?.length == undefined) return
@@ -81,7 +88,9 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
             pathsMatched.push({
               path: child.path,
               isSelected: false,
-              isChildren: true
+              isEditable: child.path?.includes(':'),
+              isChildren: true,
+              parentPath: pathItem.path,
             })
           })
         }
@@ -99,6 +108,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
           pathsMatched.push({
             path: pathItem.path,
             isSelected: false,
+            isEditable: pathItem.path?.includes(':')
           })
           parentHasBeenCreated = true
         }
@@ -106,7 +116,9 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
         pathsMatched.push({
           path: child.path,
           isSelected: false,
-          isChildren: true
+          isEditable: child.path.includes(':'),
+          isChildren: true,
+          parentPath: pathItem.path,
         })
       })
 
@@ -153,8 +165,10 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
                   <PainPerduListItemWrapper
                     items={itemsList}
                     eventDispatched={eventToDispatch}
+                    setIsEditMode={setIsEditMode}
+                    isEditMode={isEditMode}
                   />
-                  <PainPerduFooter />
+                  <PainPerduFooter isEditMode={isEditMode}/>
                 </Suspense>
               </div>
             </div>

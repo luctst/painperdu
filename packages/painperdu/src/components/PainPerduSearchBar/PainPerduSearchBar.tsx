@@ -27,7 +27,7 @@ const PainPerduSearchBar: FC<Props> = memo(function PainPerduSearchBar({
 
   return (
     <header className="px-3 pb-0 pt-3">
-      <form className="relative m-0 flex h-14 w-full items-center rounded-md bg-white bg-opacity-60 px-3 py-0 shadow-[inset_0_0_0_2px_#fcec57]">
+      <form className="relative m-0 flex h-14 w-full items-center rounded-md bg-white bg-opacity-60 px-3 py-0 shadow-[inset_0_0_0_2px_#fcec57]"  onSubmit={e => { e.preventDefault() }}>
         <label
           className="m-0 flex items-center justify-center p-0 text-yellow-200"
           id="form--label"

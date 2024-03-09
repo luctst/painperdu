@@ -1,12 +1,14 @@
 import type { FC } from 'react'
-import { useEffect, useRef , useState } from 'react'
+import React, { useEffect, useMemo, useRef , useState } from 'react'
 import { PainPerduListItem } from '../PainPerduListItem/PainPerduListItem'
 import type { CommandHandler, CustomLiRef, RouteItems } from '../../types'
 import { useCommandManager } from '../../hooks/use-command-manager'
 
 interface PainPerduListItemWrapperProps {
   items: RouteItems[],
-  eventDispatched: { eventType: string } | null
+  eventDispatched: { eventType: string } | null;
+  setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditMode: boolean;
 }
 
 const DefaultResults = (): JSX.Element => (
@@ -15,10 +17,11 @@ const DefaultResults = (): JSX.Element => (
 	</div>
 )
 
-const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventDispatched }): JSX.Element => {
+const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventDispatched, setIsEditMode, isEditMode }): JSX.Element => {
   const [cursor, setCursor] = useState<number>(-1)
   const [cursorOldState, setCursorOldState] = useState<number>(-1)
   const [routes, setRoutes] = useState<RouteItems[]>([])
+  const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
   const mainRef = useRef<HTMLElement>(null)
   const itemsRef = useRef(new Map());
 
@@ -68,6 +71,57 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
     setCursor(itemIndex)
 	}
 
+  const onEnter = () => {
+    if (cursor < 0) return;
+    if (routes[cursor]?.isEditable === false) return;
+      if (isEditMode) {
+        const isValid = Object.keys(inputValues).every((key) => {
+          console.log(key, inputValues);
+          if (inputValues[key] === null) return false;
+          if (inputValues[key].length === 0) return false;
+          return true;
+        })
+
+        if (!isValid) return false;
+        // return window.location.href = `${window.location.origin}/${routes[cursor].parentPath}${}`;
+      }
+
+      setIsEditMode(true);
+  };
+
+  const onChangeInputValues = (route: string, value: string) => {
+    setInputValues({
+      ...inputValues,
+      [route]: value,
+    })
+  }
+
+  const routesParsedFromDynamicPath = useMemo(() => {
+    if (routes === undefined) return [];
+    if (isEditMode === false) return [];
+    if (cursor < 0) return [];
+
+    return routes[cursor]?.path.split('/');
+  }, [isEditMode, cursor])
+
+  useEffect(() => {
+    if (routesParsedFromDynamicPath?.length !== 0) {
+      routesParsedFromDynamicPath?.forEach((route) => {
+        if (route.includes(':') === false) return;
+
+        setInputValues({
+          [route]: null,
+        });
+      })
+    }
+  }, [routesParsedFromDynamicPath])
+
+  useEffect(() => {
+    if (isEditMode === false) {
+      setInputValues({});
+    }
+  }, [isEditMode])
+
   useEffect(() => {
     if (cursor < 0) return
     if (cursor === routes.length) return
@@ -90,6 +144,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
     const commands: CommandHandler = {
       ArrowDown: onArrowDown,
       ArrowUp: onArrowUp,
+      Enter: onEnter,
     }
 
     const { shouldCallFn } = useCommandManager(eventDispatched.eventType, commands)
@@ -127,6 +182,9 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
                 itemsRef?.current.set(index, node)
               }}
               cursorUpdated={() => { cursorUpdated(index) }}
+              routesParsed={isEditMode && (cursor === index) ? routesParsedFromDynamicPath : []}
+              onChange={onChangeInputValues}
+              onClick={onEnter}
             />
             )
           }
