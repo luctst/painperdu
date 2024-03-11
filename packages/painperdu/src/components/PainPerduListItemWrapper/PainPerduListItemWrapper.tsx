@@ -76,14 +76,21 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
     if (routes[cursor]?.isEditable === false) return;
       if (isEditMode) {
         const isValid = Object.keys(inputValues).every((key) => {
-          console.log(key, inputValues);
           if (inputValues[key] === null) return false;
           if (inputValues[key].length === 0) return false;
           return true;
         })
 
         if (!isValid) return false;
-        // return window.location.href = `${window.location.origin}/${routes[cursor].parentPath}${}`;
+
+        const routesReadyToRedirect = [routes[cursor].parentPath && routes[cursor].parentPath];
+        routesParsedFromDynamicPath?.forEach((route) => {
+          if (route.includes(':')) return routesReadyToRedirect.push(inputValues[route])
+          return routesReadyToRedirect.push(route);
+        })
+
+        window.location.href = `${window.location.origin}/${routesReadyToRedirect.join('/')}`;
+        return;
       }
 
       setIsEditMode(true);

@@ -9,18 +9,17 @@ interface Props {
   onClick: () => void;
 }
 
-const ListItem: FC<Omit<Props, 'route' | 'cursorUpdated'>> = ({ routesParsed, onChange }) => {
+const ListItem: FC<Omit<Props, 'route' | 'cursorUpdated' | 'onClick'>> = ({ routesParsed, onChange }) => {
   return (
     <form onSubmit={e => { e.preventDefault()}} className='flex items-center justify-start'>
       {
         routesParsed.map((route, index) => {
           return (
-            <div>
+            <div className="inline" key={index}>
               {
                 route.includes(':') ?
                 <input
-                  key={index}
-                  className="w-1/4 p-1 ml-1 text-xs text-[#6c757d]'"
+                  className="p-1 ml-1 text-xs text-[#6c757d]'"
                   autoComplete="off"
                   aria-autocomplete="both"
                   autoCorrect="off"
@@ -33,7 +32,7 @@ const ListItem: FC<Omit<Props, 'route' | 'cursorUpdated'>> = ({ routesParsed, on
                   maxLength={64}
                   onChange={(e) => onChange(route, e.target.value)}
                 />
-                : <span className='text-xs text-[#6c757d]' key={index}>{`/${route}`}</span>
+                : <span className='text-xs text-[#6c757d]'>{`/${route}`}</span>
               }
             </div>
           );
