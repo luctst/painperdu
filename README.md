@@ -55,7 +55,7 @@ npm run typecheck
   ```js
   <PainPerdu teleport="#popper-root" pathItems={ args } />
   ```
-- **teleport** : The dom element where the modale will be displayed
+- **teleport** : The dom element where the modal will be displayed
 - **pathItems** : Route's app / Router
 ## Author(s)
   [Lucas Tostée](https://github.com/luctst) </br>
