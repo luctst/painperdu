@@ -21,7 +21,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
   const [cursor, setCursor] = useState<number>(-1)
   const [cursorOldState, setCursorOldState] = useState<number>(-1)
   const [routes, setRoutes] = useState<RouteItems[]>([])
-  const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
+  const [inputValues, setInputValues] = useState<{ [key: string]: string | null }>({});
   const mainRef = useRef<HTMLElement>(null)
   const itemsRef = useRef(new Map());
 
@@ -77,13 +77,18 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
       if (isEditMode) {
         const isValid = Object.keys(inputValues).every((key) => {
           if (inputValues[key] === null) return false;
-          if (inputValues[key].length === 0) return false;
+          if (inputValues[key]?.length === 0) return false;
           return true;
         })
 
         if (!isValid) return false;
 
-        const routesReadyToRedirect = [routes[cursor].parentPath && routes[cursor].parentPath];
+        const routesReadyToRedirect = [];
+
+        if (routes[cursor]?.parentPath) {
+          routesReadyToRedirect.push((routes[cursor] as RouteItems).parentPath);
+        }
+
         routesParsedFromDynamicPath?.forEach((route) => {
           if (route.includes(':')) return routesReadyToRedirect.push(inputValues[route])
           return routesReadyToRedirect.push(route);
@@ -108,12 +113,18 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
     if (isEditMode === false) return [];
     if (cursor < 0) return [];
 
-    return routes[cursor]?.path.split('/');
+    const paths = routes[cursor]?.path;
+
+    if (paths !== undefined) {
+      return paths.split('/');
+    }
+
+    return [];
   }, [isEditMode, cursor])
 
   useEffect(() => {
     if (routesParsedFromDynamicPath?.length !== 0) {
-      routesParsedFromDynamicPath?.forEach((route) => {
+      routesParsedFromDynamicPath?.forEach((route: string) => {
         if (route.includes(':') === false) return;
 
         setInputValues({
