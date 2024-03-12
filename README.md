@@ -1,106 +1,72 @@
 # Painperdu
 ---
-*Create shortcuts label to navigate on your apps routes*
-
-## Usage
-**With Javascript vanilla**
-
-Include our CDN inside your `.html` files, require browser versions:
-
-* Chrome >=87
-* Firefox >=78
-* Safari >=13
-* Edge >=88
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pain perdu with CDN</title>
-    <link rel="stylesheet" href="https://unpkg.com/painperdu/dist/style.css" crossorigin="anonymous">
-    <!-- DO NOT FORGET TO ADD THIS LINE ⬆️ -->
-</head>
-<body>
-    <script type="module">
-        import painPerdu from 'https://unpkg.com/painperdu/dist/painperdu.js';
-        // You can now use Pain perdu by pressing CMD + K
-        painPerdu([
-            { path: '/home', label: 'hm' },
-            // Add more routes
-        ]);
-    </script>
-</body>
-</html>
-```
-
-**with NPM**
-
-First
-```
-npm i painperdu
-```
-
-Then
-```js
-// index.js
-import painPerdu from 'painperdu';
-painPerdu([
-    { path: '/home', label: 'hm' },
-    // add more routes
-]);
-```
-
-## Install
-```
-npm i 
-```
-
-**development**
-```
-npm run dev
-```
-
+## Project Name
+  PainPerdu
+## Description
+  The **PainPerdu** package is made to find all yours lost routes.
+  You can search any routes which contains the word or expression you will want to find.</br>
+  The principle is the same as the game of hide and seek.
+## Installation
+  ```bash
+  npm install painperdu
+  ```
 **lint**
 ```
 npm run lint
 ```
-
-**fix lint**
-```
-npm run lint:fix
-```
-
-**test**
-```
-npm run test
-```
-
 **ts type check**
 ```
-npm run type:watch
+npm run typecheck
 ```
-
-> **Note** - When you're commiting some files we're using husky with the npm run lint:fix script to ensure no errors are detected plus commitlint.
-
-## API
-### main(routes[object]);
-**routes**
-
-Type: `array` required
-
-An array of object with routes data.
-
-**object.path**
-
-Type: `String` - Required
-
-Path of your route to load, ex: `/path`.
-
-**object.label**
-
-Type: `String` - Required
-
-Data to search when looking for some route, ex: 'hm'.
+## Usage
+  Single route :
+  ```js
+  // preview.tsx
+  {
+    path: '/',
+    element: <div>Heree</div>
+  },
+  ```
+  Route with children :
+  ```js
+  // preview.tsx
+  {
+    path: 'test',
+    element: <div/>,
+    children: [
+      {
+        path: ':id'
+      },
+      {
+        path: 'user/:id'
+      },
+      {
+        path: 'user/test/:test-id'
+      },
+      {
+        path: 'user/test/:test-about'
+      },
+      {
+      }
+    ],
+  },
+  ```
+## Props
+  ```js
+  <PainPerdu teleport="#popper-root" pathItems={ args } />
+  ```
+- **teleport** : The dom element where the modale will be displayed
+- **pathItems** : Route's app / Router
+## Author(s)
+  [Lucas Tostée](https://github.com/luctst) </br>
+  [Kévin Joya](kvin3324.github.io/kevinjoya/)
+## Version
+  v1
+ ## Dependencies
+  Eslint
+  React
+  React-dom
+  React-router-dom
+  Tailwindcss
+  Typescript
+  Vite
