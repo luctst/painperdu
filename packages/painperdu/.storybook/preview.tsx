@@ -28,7 +28,6 @@ export const router = createMemoryRouter([
         path: 'user/test/:test-about'
       },
       {
-        path: 'user/:bite/test/:test-bite/about/:test-about'
       }
     ],
   },
