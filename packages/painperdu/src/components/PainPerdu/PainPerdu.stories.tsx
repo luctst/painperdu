@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { PainPerdu } from './painPerdu';
+import type { RouteObject } from "react-router-dom";
 
 export default {
   title: 'PainPerdu',
-  render: (args) => <PainPerdu teleport="#popper-root" pathItems={args.pathItems}/>,
+  render: (args) => <PainPerdu teleport="#popper-root" pathItems={(args as unknown as RouteObject[])}/>,
   parameters: {
     layout: 'fullscreen',
   },
