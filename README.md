@@ -2,8 +2,7 @@
 ---
 ## Description
   The **PainPerdu** package is made to find all yours lost routes.
-  You can search any routes which contains the word or expression you will want to find.</br>
-  The principle is the same as the game of hide and seek but it's to find routes and not humans.
+  You can search any routes which contains the word or expression you will want to find.
 ## Requirements
   **node >=18.x** </br>
   **pnpm** and not **npm** </br>
