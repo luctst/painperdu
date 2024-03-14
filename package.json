@@ -1,28 +1,30 @@
 {
   "private": true,
-  "name": "painperdu",
   "scripts": {
-    "dev": "pnpm run --filter './packages/*' --if-present --parrallel --stream dev",
+    "dev": "pnpm run --filter './packages/*' --if-present --parallel --stream dev",
     "dev:storybook": "pnpm run --filter painperdu --if-present --stream dev",
     "lint": "pnpm run --filter './packages/*' --if-present --parallel --stream lint",
-    "typecheck": "pnpm run --filter './packages/*' --if-present -r typecheck"
+    "typecheck": "pnpm run --filter './packages/*' --if-present -r typecheck",
+    "build": "parcel build 'packages/painperdu' --no-cache"
   },
+  "packageManager": "pnpm",
   "engines": {
     "node": ">=18.0.0",
     "npm": "please use pnpm",
     "yarn": "please use pnpm"
   },
-  "license": "ISC",
   "lint-staged": {
-    "*.{ts, tsx, jxs}": "pnpm run lint"
+    "packages/*.{ts, tsx, jsx}": "pnpm run lint"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
+    "@parcel/packager-ts": "2.12.0",
+    "@parcel/transformer-typescript-types": "2.12.0",
+    "ensure-branch-name": "workspace:^",
     "husky": "^8.0.3",
-    "lint-staged": "^15.2.0"
-  },
-  "dependencies": {
-    "ensure-branch-name": "workspace:^"
+    "lint-staged": "^15.2.0",
+    "parcel": "^2.12.0",
+    "typescript": ">=3.0.0"
   }
 }

@@ -1,78 +1,20 @@
-name: Node.js Package
-
+name: Publish Package to npmjs
 on:
-  push:
-    branches:
-      - master
-  workflow_dispatch:
-
+  release:
+    types: [published]
 jobs:
   ci:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [14]
-
-    steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@master
-
-      - name: Setup node env 🏗
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: ${{ matrix.node }}
-          check-latest: true
-
-      - name: Cache node_modules 📦
-        uses: actions/cache@v2.1.4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      
-      - name: Install dependencies 👨🏻‍💻
-        run: npm ci --prefer-offline --no-audit
-      
-      - name: Testing 🏢
-        run: npm run test
-
-      - name: Run linter 👀
-        run: npm run lint
-      
-      - name: Check type 😬
-        run: npm run type
-        
+    uses: ./.github/workflows/reusable-lint-typecheck.yaml
   publish-npm:
     needs: ci
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     steps:
-      - name: Checkout 
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: 16
           registry-url: https://registry.npmjs.org/
-          cache: 'npm'
-      - run: |
-          npm ci --prefer-offline --no-audit
-          npm run build
-          npm publish
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      
-      - name: package-version
-        run: node -p -e '`PACKAGE_VERSION=${require("./package.json").version}`' >> $GITHUB_ENV
-
-      - name: package-version-to-git-tag
-        uses: pkgdeps/git-tag-action@v2
-        with:
-          github_token: ${{ secrets.TOKEN_TAG }}
-          github_repo: ${{ github.repository }}
-          git_commit_sha: ${{ github.sha }}
-          version: ${{ env.PACKAGE_VERSION }}
-          git_tag_prefix: "v"

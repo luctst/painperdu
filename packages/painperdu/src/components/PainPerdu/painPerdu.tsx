@@ -5,7 +5,6 @@ import { Suspense, useEffect, useState, lazy,useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { useCommandManager } from '../../hooks/use-command-manager'
 import { PainPerduSkeleton } from '../PainPerduSkeleton/PainPerduSkeleton'
-import '../../index'
 
 const PainPerduSearchBar = lazy(() => import('../PainPerduSearchBar/PainPerduSearchBar'));
 const PainPerduListItemWrapper = lazy(() => import('../PainPerduListItemWrapper/PainPerduListItemWrapper'));
