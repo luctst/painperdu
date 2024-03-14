@@ -1,106 +1,94 @@
-# Painperdu
----
-*Create shortcuts label to navigate on your apps routes*
+## Why
+"Pain perdu," from the French words "[pain perdu](https://fr.wikipedia.org/wiki/Pain_perdu)," which means "lost bread," is a bread recipe. It is a React component built with Tailwind and TypeScript that allows you to quickly navigate between your React routes.
 
-## Usage
-**With Javascript vanilla**
+## Requirements
+* NodeJs - **>=18.x**
+* Tailwindcss
+* npm - **>7.x**
 
-Include our CDN inside your `.html` files, require browser versions:
-
-* Chrome >=87
-* Firefox >=78
-* Safari >=13
-* Edge >=88
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pain perdu with CDN</title>
-    <link rel="stylesheet" href="https://unpkg.com/painperdu/dist/style.css" crossorigin="anonymous">
-    <!-- DO NOT FORGET TO ADD THIS LINE ⬆️ -->
-</head>
-<body>
-    <script type="module">
-        import painPerdu from 'https://unpkg.com/painperdu/dist/painperdu.js';
-        // You can now use Pain perdu by pressing CMD + K
-        painPerdu([
-            { path: '/home', label: 'hm' },
-            // Add more routes
-        ]);
-    </script>
-</body>
-</html>
-```
-
-**with NPM**
-
-First
+## Install
 ```
 npm i painperdu
 ```
 
-Then
+## Usage
+> ❗Before starting to use pain perdu, you must have completed the Tailwind CSS configuration. Check this link to install Tailwind CSS with the correct framework: https://tailwindcss.com/docs/installation/framework-guides. Then, make sure to add this line in order for Tailwind to inject the styles into pain perdu.
+
 ```js
-// index.js
-import painPerdu from 'painperdu';
-painPerdu([
-    { path: '/home', label: 'hm' },
-    // add more routes
+module.exports = {
+  content: [
+    './components/**/*.{html,js}',
+    './pages/**/*.{html,js}',
+    './node_modules/painperdu/dist/*.{js,cjs,mjs}',
+  ],
+}
+```
+
+*Depending on your configuration, you may have some issues with paths. In this case, check this Tailwind config paths: [Tailwind CSS Configuration Paths](https://tailwindcss.com/docs/content-configuration#using-relative-paths)*
+
+Use "PainPerdu" as the top-level component in your app. Then, press `CMD` + `K` on Mac or `CTRL` + `K` on Windows to trigger the PainPerdu modal.
+
+```jsx
+import { PainPerdu } from 'painperdu';
+import { createBrowserRouter } from 'react-router-dom';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <div>Home</div>
+  },
+  {
+    path: '/user',
+    element: <div>User</div>,
+    children: [
+      {
+        path: ':id',
+        element: <div>User :id</div>
+      },
+    ],
+  },
+  {
+    path: '/contact',
+    element: <div>Contact</div>
+  },
 ]);
+
+return (
+  <PainPerdu teleport="#html-id" routes={router.routes}/> // Press CMD(on mac) or CTRL(on windows) + k to open PainPerdu
+  // Other JSX, Components..
+);
 ```
 
-## Install
-```
-npm i 
-```
+## Props
 
-**development**
-```
-npm run dev
-```
+**teleport**
+Type: `string`
+HTML id and HTML class to pass in `document.querySelector` when passing into the `createPortal` function.
 
-**lint**
-```
-npm run lint
-```
-
-**fix lint**
-```
-npm run lint:fix
-```
-
-**test**
-```
-npm run test
-```
-
-**ts type check**
-```
-npm run type:watch
-```
-
-> **Note** - When you're commiting some files we're using husky with the npm run lint:fix script to ensure no errors are detected plus commitlint.
-
-## API
-### main(routes[object]);
 **routes**
+Type: `Array<RouteObject>`
+Array of `RouteObject` from `react-router-dom`.
 
-Type: `array` required
 
-An array of object with routes data.
+## Contributing
+Contributions to painperdu are always welcome!
+* 📥 Pull requests and 🌟 Stars are always welcome.
+* Read our [contributing](https://github.com/luctst/painperdu/blob/master/.github/CONTRIBUTING.md) guide to get started,
 
-**object.path**
+### Install
+```
+pnpm i
+```
 
-Type: `String` - Required
+### Development scripts
+painperdu is organized as a monorepo with pnpm. Useful scripts include:
 
-Path of your route to load, ex: `/path`.
+**pnpm run dev**
+> Runs a sandbox template storybook with all painperdu stories.
 
-**object.label**
+## Licence
+[MIT](https://github.com/luctst/painperdu/blob/master/LICENSE)
 
-Type: `String` - Required
-
-Data to search when looking for some route, ex: 'hm'.
+## Authors:
+* [Tostee Lucas](https://github.com/luctst)
+* [Joya Kévin](https://github.com/Kvin3324)

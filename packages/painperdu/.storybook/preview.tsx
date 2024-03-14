@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/react";
 import { MemoryRouter, Routes, Route, createMemoryRouter } from 'react-router-dom';
-import '../src/style.css';
+import '../src/index.css';
 
 export const router = createMemoryRouter([
   {

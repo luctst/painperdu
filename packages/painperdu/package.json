@@ -5,7 +5,9 @@
   "keywords": [
     "react",
     "component",
-    "routes"
+    "routes",
+    "tailwind",
+    "react-router"
   ],
   "source": "./src/index.ts",
   "main": "./dist/index.js",
@@ -46,7 +48,8 @@
     "dev": "storybook dev -p 6006",
     "lint": "eslint \"src/**/*.{ts, vue}\" --fix",
     "typecheck": "tsc",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.3",
@@ -68,16 +71,14 @@
     "storybook": "^7.6.3",
     "ts-config-painperdu": "workspace:^",
     "typescript": "*",
-    "vite": "^5.0.12"
-  },
-  "dependencies": {
+    "vite": "^5.0.12",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",
-    "react-dom": "^18.2.0",
-    "react-router-dom": ">=6.x",
     "tailwindcss": "^3.3.6"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": ">=6.x"
   }
 }
