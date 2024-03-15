@@ -26,11 +26,23 @@ module.exports = {
 
 *Depending on your configuration, you may have some issues with paths. In this case, check this Tailwind config paths: [Tailwind CSS Configuration Paths](https://tailwindcss.com/docs/content-configuration#using-relative-paths)*
 
+### Example
 Use "PainPerdu" as the top-level component in your app. Then, press `CMD` + `K` on Mac or `CTRL` + `K` on Windows to trigger the PainPerdu modal.
 
+```tsx
+// main.tsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
+
+
+ReactDOM.createRoot(document.getElementById('#your-html-id')!.render(<App />))
+```
+
 ```jsx
+// App.tsx
 import { PainPerdu } from 'painperdu';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
@@ -53,19 +65,19 @@ const router = createBrowserRouter([
   },
 ]);
 
-return (
-  <PainPerdu teleport="#html-id" routes={router.routes}/> // Press CMD(on mac) or CTRL(on windows) + k to open PainPerdu
-  // Other JSX, Components..
-);
+function App() {
+  return (
+    <>
+      <PainPerdu routes={router.routes}/> // Press CMD(on mac) or CTRL(on windows) + k to open PainPerdu
+      <RouterProvider router={router} />
+    </>
+  );
+}
+
+export default App;
 ```
 
 ## Props
-
-**teleport**
-
-Type: `string`
-
-HTML id and HTML class to pass in `document.querySelector` when passing into the `createPortal` function.
 
 **routes**
 
@@ -73,6 +85,13 @@ Type: `Array<RouteObject>`
 
 Array of `RouteObject` from `react-router-dom`.
 
+
+**teleport** - Optional
+
+Type: `string`
+default: `document.body`
+
+HTML id and HTML class to pass in `document.querySelector` when passing into the `createPortal` function.
 
 ## Contributing
 Contributions to painperdu are always welcome!
