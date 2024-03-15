@@ -5,7 +5,6 @@ import { Suspense, useEffect, useState, lazy,useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { useCommandManager } from '../../hooks/use-command-manager'
 import { PainPerduSkeleton } from '../PainPerduSkeleton/PainPerduSkeleton'
-import '../../index'
 
 const PainPerduSearchBar = lazy(() => import('../PainPerduSearchBar/PainPerduSearchBar'));
 const PainPerduListItemWrapper = lazy(() => import('../PainPerduListItemWrapper/PainPerduListItemWrapper'));
@@ -16,11 +15,11 @@ interface EventDispatched {
 };
 
 interface Props {
-  pathItems: RouteObject[];
+  routes: RouteObject[];
   teleport: string;
 }
 
-export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
+export const PainPerdu: FC<Props> = ({ routes, teleport }) => {
   const [isModalActive, setModalActive] = useState<boolean>(false);
   const [itemsList, setItemsList] = useState<RouteItems[]>([]);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
@@ -73,7 +72,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
   const childrenPathsformatted = (value: string) => {
     const pathsMatched: RouteItems[] = []
 
-    pathItems.forEach(pathItem => {
+    routes.forEach(pathItem => {
       if (pathItem.path?.includes(value)) {
         pathsMatched.push({
           path: pathItem.path,
@@ -155,7 +154,7 @@ export const PainPerdu: FC<Props> = ({ pathItems, teleport }) => {
           shouldActiveModal(false);
         }}
       ></div>
-      <div className="relative inset-0 z-50 mx-auto my-0 mt-40 flex w-7/12 items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
+      <div className="relative inset-0 z-50 mx-auto my-0 flex w-7/12 items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
         <div className="m-w-[560px] relative flex w-full flex-col rounded-xl border-0 bg-white bg-opacity-60 shadow-lg outline-none focus:outline-none">
           <div className="bg-white bg-opacity-60 px-0 pt-1">
             <div>

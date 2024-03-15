@@ -4,7 +4,7 @@ import type { RouteObject } from "react-router-dom";
 
 export default {
   title: 'PainPerdu',
-  render: (args) => <PainPerdu teleport="#popper-root" pathItems={(args as unknown as RouteObject[])}/>,
+  render: (args) => <PainPerdu teleport="#popper-root" routes={(args as unknown as RouteObject[])}/>,
   parameters: {
     layout: 'fullscreen',
   },

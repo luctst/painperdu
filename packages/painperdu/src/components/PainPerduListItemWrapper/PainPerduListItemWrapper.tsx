@@ -73,30 +73,35 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
 
   const onEnter = () => {
     if (cursor < 0) return;
-    if (routes[cursor]?.isEditable === false) return;
-      if (isEditMode) {
-        const isValid = Object.keys(inputValues).every((key) => {
-          if (inputValues[key] === null) return false;
-          if (inputValues[key]?.length === 0) return false;
-          return true;
-        })
+    if (routes[cursor]?.isEditable === false) {
+      window.location.href = `${window.location.origin}${routes[cursor]?.path?.includes('/') ? routes[cursor]?.path : `/${routes[cursor]?.path}`}`
+     console.log(routes[cursor]);
+     return;
+    }
 
-        if (!isValid) return false;
+    if (isEditMode) {
+      const isValid = Object.keys(inputValues).every((key) => {
+        if (inputValues[key] === null) return false;
+        if (inputValues[key]?.length === 0) return false;
+        return true;
+      })
 
-        const routesReadyToRedirect = [];
+      if (!isValid) return false;
 
-        if (routes[cursor]?.parentPath) {
-          routesReadyToRedirect.push((routes[cursor] as RouteItems).parentPath);
-        }
+      const routesReadyToRedirect = [];
 
-        routesParsedFromDynamicPath?.forEach((route) => {
-          if (route.includes(':')) return routesReadyToRedirect.push(inputValues[route])
-          return routesReadyToRedirect.push(route);
-        })
-
-        window.location.href = `${window.location.origin}/${routesReadyToRedirect.join('/')}`;
-        return;
+      if (routes[cursor]?.parentPath) {
+        routesReadyToRedirect.push((routes[cursor] as RouteItems).parentPath);
       }
+
+      routesParsedFromDynamicPath?.forEach((route) => {
+        if (route.includes(':')) return routesReadyToRedirect.push(inputValues[route])
+        return routesReadyToRedirect.push(route);
+      })
+
+      window.location.href = `${window.location.origin}/${routesReadyToRedirect.join('/')}`;
+      return;
+    }
 
       setIsEditMode(true);
   };
@@ -187,7 +192,7 @@ const PainPerduItemWrapper: FC<PainPerduListItemWrapperProps> = ({ items, eventD
   if (items.length <= 0) return <DefaultResults />
 
   return (
-    <main className="min-h-3 max-h-[488px] h-[60vh] py-0 px-3 overflow-y-auto" ref={mainRef}>
+    <main className="min-h-3 h-auto max-h-[488px] py-0 px-3 overflow-y-auto" ref={mainRef}>
 			<div className="text-sm	my-0 mx-auto">
   		 <div className="max-h-[500px]">
         <ul className="flex-col mb-12 pt-8 pl-4 text-[#6c757d]">
