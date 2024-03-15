@@ -35,7 +35,15 @@ jobs:
           HUSKY: 0
 
       - name: Build PainPerdu
-        run: pnpm run --filter painperdu build
+        run: pnpm run build
 
-      - name: Push to NPM
-        run: pnpm run --filter painperdu publish --access public --publish-branch master
+      - uses: actions/setup-node@v4
+        name: Push to NPM
+        with:
+          cache: 'pnpm'
+          cache-dependency-path: ${{ env.STORE_PATH }}
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: pnpm --filter painperdu publish --access public --publish-branch master
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
