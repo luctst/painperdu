@@ -12,13 +12,13 @@ npm i painperdu
 ```
 
 ## Usage
-> ❗Before starting to use pain perdu, you must have completed the Tailwind CSS configuration. Check this link to install Tailwind CSS with the correct framework: https://tailwindcss.com/docs/installation/framework-guides. Then, make sure to add this line in order for Tailwind to inject the styles into pain perdu.
+> ❗Before starting to use pain perdu, you must have completed the Tailwind CSS configuration. Check this link to install Tailwind CSS with the correct framework: https://tailwindcss.com/docs/installation/framework-guides. </br> Then, make sure to **add this line** in order for Tailwind to inject the styles into pain perdu :
 
 ```js
+// tailwind.config.js
 module.exports = {
   content: [
-    './components/**/*.{html,js}',
-    './pages/**/*.{html,js}',
+    // Your configuration...
     './node_modules/painperdu/dist/*.{js,cjs,mjs}',
   ],
 }
@@ -62,11 +62,15 @@ return (
 ## Props
 
 **teleport**
+
 Type: `string`
+
 HTML id and HTML class to pass in `document.querySelector` when passing into the `createPortal` function.
 
 **routes**
+
 Type: `Array<RouteObject>`
+
 Array of `RouteObject` from `react-router-dom`.
 
 
