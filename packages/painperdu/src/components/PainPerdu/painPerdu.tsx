@@ -16,7 +16,7 @@ interface EventDispatched {
 
 interface Props {
   routes: RouteObject[];
-  teleport: string;
+  teleport?: string;
 }
 
 export const PainPerdu: FC<Props> = ({ routes, teleport }) => {
@@ -175,6 +175,6 @@ export const PainPerdu: FC<Props> = ({ routes, teleport }) => {
         </div>
       </div>
     </>,
-    document.querySelector(teleport)!,
+    teleport !== undefined ? document.querySelector(teleport)! : document.body,
   );
 };
