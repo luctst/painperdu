@@ -1,5 +1,5 @@
 {
-  "private": false,
+  "private": true,
   "scripts": {
     "dev": "pnpm run --filter './packages/*' --if-present --parallel --stream dev",
     "dev:storybook": "pnpm run --filter painperdu --if-present --stream dev",
