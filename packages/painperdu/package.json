@@ -42,7 +42,6 @@
   "bugs": {
     "url": "https://github.com/luctst/painperdu/issues"
   },
-  "packageManager": "pnpm",
   "license": "MIT",
   "scripts": {
     "dev": "storybook dev -p 6006",

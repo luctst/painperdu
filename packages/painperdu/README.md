@@ -94,20 +94,7 @@ default: `document.body`
 HTML id and HTML class to pass in `document.querySelector` when passing into the `createPortal` function.
 
 ## Contributing
-Contributions to painperdu are always welcome!
-* 📥 Pull requests and 🌟 Stars are always welcome.
-* Read our [contributing](https://github.com/luctst/painperdu/blob/master/.github/CONTRIBUTING.md) guide to get started,
-
-### Install
-```
-pnpm i
-```
-
-### Development scripts
-painperdu is organized as a monorepo with pnpm. Useful scripts include:
-
-**pnpm run dev**
-> Runs a sandbox template storybook with all painperdu stories.
+[https://github.com/luctst/painperdu?tab=readme-ov-file#contributing](https://github.com/luctst/painperdu?tab=readme-ov-file#contributing)
 
 ## Licence
 [MIT](https://github.com/luctst/painperdu/blob/master/LICENSE)
